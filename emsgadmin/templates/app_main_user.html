@@ -1,0 +1,169 @@
+{% extends "parent/base_app_main.html" %}
+{% block title %} 应用详情 {% endblock %}
+
+{% block nav_1 %}
+	<span class="navbar-unread">1</span>
+{% endblock %}
+
+{% block tab_3 %}active{% endblock %}  
+
+{% block right %}  
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			
+			<div class="col-lg-3">
+				<input class="form-control" id="from" type="search" placeholder="用户名">
+			</div><!-- /.col-lg-6 -->
+			<div class="col-lg-3">
+				<button class="btn btn-default fui-search"></button>
+			</div>
+			<div class="col-lg-6" style="text-align:right;">
+				<div class="btn-group">
+					<a 	class="btn btn-default fui-arrow-left" 
+						title="首页" 
+						href="/app_main/user/?app_name={{app_name}}"
+					/>
+					<a 	class="btn btn-default fui-triangle-left-large" 
+						title="上一页" 
+						{% if page.back != -1 %}
+						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.back}}"
+						{% endif %}
+					/>
+					<a 	class="btn btn-default fui-triangle-right-large" 
+						title="下一页" 
+						{% if page.next != page.totalNo %}
+						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.next}}"
+						{% endif %}
+					/>
+					<a 	class="btn btn-default fui-arrow-right" title="尾页" 
+						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.lastPage}}"
+					></a>
+					<button class="btn fui-resize" title="刷新" onclick="location.reload() ;"></button>
+				</div>
+			</div>
+		  
+		</div><!-- /.row -->
+	</div>
+	<div class="panel-body" >
+		<table class="table">
+			{% for user in page.result %}	
+			<tr>
+				<td>
+					<span class="fui-user">&nbsp;{{user.jid}}</span>
+				</td>
+				<td>
+					<span class="{% if user.shutup %}fui-mute{% else %}fui-volume{% endif %}" title="禁言／解除"></span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="fui-mail" title="发消息" onclick="send_packet_btn('{{user.jid}}');"></span>
+				</td>
+			</tr>
+			{% empty %}
+				<tr>
+					<td>当前没有活跃的连接</td>
+				</tr>
+			{% endfor %}
+		</table>
+		{% if page.totalCount > 0 %}
+			<div style="text-align: right;">
+				<span class="label label-default">总数:{{page.totalCount}}</span>
+				<span class="label label-default">当前页：{{page.pageNo}}</span>
+				<span class="label label-default">每页：{{page.pageSize}}</span>
+				<span class="label label-default">共{{page.totalNo}}页</span>
+			</div>
+		{% endif %}
+
+	</div>
+
+</div>	
+
+
+<!--static dialog--> 
+<div id="send_packet_dlg" title="Modal Dialog"> 
+<form method="post" action="/reg_save/" id="reg_form" >
+	<div class="form-horizontal">
+	
+		<div class="form-group">
+		<label for="inputPassword3" class="col-sm-3 control-label">消息类型:</label>
+		<div class="col-sm-5">
+			<select class="form-control" name="offline_ex" id="offline_ex" >
+			  <option value="7">普通聊天</option>
+			  <option value="7">群聊天</option>
+			</select>
+		</div>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="inputPassword3" class="col-sm-3 control-label">可靠传输:</label>
+		<div class="col-sm-5">
+			<select class="form-control" name="offline_ex" id="offline_ex" >
+			  <option value="7">是</option>
+			  <option value="7">否</option>
+			</select>
+		</div>
+	  </div>	
+	
+	  <div class="form-group">
+		<label for="inputEmail3" class="col-sm-3 control-label">发送人:</label>
+		<div class="col-sm-9">
+		  <input type="text" class="form-control" id="inputEmail3" placeholder="jid" />
+		</div>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="inputPassword3" class="col-sm-3 control-label">接受人:</label>
+		<div class="col-sm-9">
+		  <input type="text" class="form-control" id="inputEmail3" />
+		</div>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="inputPassword3" class="col-sm-3 control-label">消息内容:</label>
+		<div class="col-sm-9">
+		  <textarea class="form-control" rows="3">{"attrs":{},"content":""}</textarea>
+		</div>
+	  </div>
+	  
+	  
+	  
+	  
+	</div>	 
+</form>	
+</div>
+<!--end static dialog-->
+
+{% endblock %}
+
+
+
+
+{% block script %}
+<script>
+var send_packet_dlg = null;
+var send_packet_btn = function(args){
+	$("#reg_username").val('');
+	$("#reg_password").val('');
+	$("#reg_email").val('');
+	send_packet_dlg.dialog('open');
+}
+$(function(){
+	send_packet_dlg = $('#send_packet_dlg').dialog({
+		autoOpen:false,
+		height:650,
+		width:550,
+		title:'发消息',
+		modal:true,
+		buttons:{
+			'发送':function(){
+				
+			},
+			'关闭':function(){
+				send_packet_dlg.dialog('close');
+			}
+		},
+		close:function(){}
+	});
+});	
+</script>	
+{% endblock %}
+

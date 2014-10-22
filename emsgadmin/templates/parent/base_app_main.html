@@ -1,0 +1,50 @@
+{% extends "parent/base.html" %}
+{% block title %} 应用详情 {% endblock %}
+
+{% block nav_1 %}
+	<span class="navbar-unread">1</span>
+{% endblock %}
+
+{% block body %}  
+	
+	<ol class="breadcrumb">
+		<li><a href="/"><span class="fui-arrow-right">应用</span></a></li>
+		<li class="active">详情</li>	   	
+	</ol>
+	
+	<div class="row">
+
+		<div class="col-md-2" style="background-color">
+		{% block left %}  
+			<div class="panel panel-default"><div class="panel-body">
+				<ul class="nav nav-pills nav-stacked" role="tablist">
+				  <li role="presentation" class="{% block tab_1 %}{% endblock %}" ><a href="/app_main/?app_name={{app_name}}" class="fui-calendar">&nbsp;基本信息</a></li>
+				  <li role="presentation" class="{% block tab_2 %}{% endblock %}" ><a href="/app_main/statistic/?app_name={{app_name}}" class="fui-document">&nbsp;统计数据</a></li>
+				  <li role="presentation" class="{% block tab_3 %}{% endblock %}" ><a href="/app_main/user/?app_name={{app_name}}" class="fui-user">&nbsp;在线用户</a></li>
+				  <li role="presentation" class="{% block tab_4 %}{% endblock %}" ><a href="/app_main/config/?app_name={{app_name}}" class="fui-clip">&nbsp;配置管理</a></li>
+				</ul>
+			</div></div>
+		{% endblock %}
+		</div>
+		
+		<div class="col-md-10">
+			{% block right %}{% endblock %}	
+		</div>
+		
+	</div>
+	
+	
+	
+{% endblock %}
+
+
+
+
+{% block script %}
+<script>
+$(function(){
+	
+});	
+</script>	
+{% endblock %}
+

@@ -1,0 +1,137 @@
+{% extends "parent/base.html" %}
+{% block title %} 首页 {% endblock %}
+
+{% block nav_1 %}
+	<span class="navbar-unread">1</span>
+{% endblock %}
+
+
+{% block body %}  
+	
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-lg-3">
+					<button type="button" class="btn btn-info" id="createAppBtn">
+						<span class="fui-plus"> &nbsp;添加</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-hover "> 
+				<thead> 
+					<tr> 
+						<th></th> 
+						{% if is_root %}<th>客户</th>{% endif %}
+						<th>应用名称</th> 
+						<th>应用描述</th> 
+						<th>操作</th> 
+					</tr> 
+				</thead> 
+				<tbody> 
+					{% for domain in domain_list %}	
+					<tr> 
+						<td>{{forloop.counter}}</td> 
+						{% if is_root %}<td>{{domain.userid}}</td>{% endif %}
+						<td>
+							<span class="fui-search">&nbsp;<a href="/app_main/?app_name={{domain.name}}">{{domain.name}}</a></span>
+						</td> 
+						<td>{{domain.description}}</td> 
+						<td>
+							<span class="fui-new"></span>
+							&nbsp; &nbsp; &nbsp; &nbsp;
+							<span class="fui-trash"></span>
+						</td> 
+					</tr> 
+					{% empty %}
+						<tr>
+							<td></td>
+							<td>点击“添加”创建应用</td>
+						</tr>
+					{% endfor %}
+				</tbody> 
+			</table>
+			
+		</div>
+	</div>
+	
+	
+	
+	<!--static dialog--> 
+	<div id="createAppDlg" title="Modal Dialog"> 
+		<form method="post" action="/app_save/" id="app_form" >
+		<p id="app_name_p"> 
+			<label class="control-label" id="app_name_l" ></label>
+			<input class="form-control" name="name" type="text" id="app_name" placeholder="应用名称">
+		</p> 
+		<p> 
+			<textarea value="" placeholder="应用描述" name="description"  class="form-control"></textarea>
+		</p> 
+		</form>
+	</div>
+	<!--end static dialog-->
+{% endblock %}
+
+
+
+
+{% block script %}
+<script>
+$(function(){
+	createAppDlg = $('#createAppDlg').dialog({
+		autoOpen:false,
+		height:350,
+		width:550,
+		title:'添加应用',
+		modal:true,
+		buttons:{
+			"保存":function(){
+				$('#app_form').submit();
+			},
+			"取消":function(){
+				createAppDlg.dialog('close');
+			}
+		},
+		close:function(){
+			//alert('close');
+		}	
+	}); 
+
+	//表单验证
+	$('#app_name').on('blur',function(){
+		app_name = this.value.trim()
+		$('#app_name_l').html('');	
+		$('#app_name_p').removeClass('has-error');
+		if(app_name){
+			//教研这个名字是否已经存在了
+			$.ajax({
+				type:"post",
+				url:base_url+"/rest/",
+				dataType:"text",
+				data:{
+					body:'{"method":"checkappname","params":"'+app_name+'"}'
+				},
+				success:function(data){
+					rtn = JSON.parse(data);
+					if(!rtn.success){
+						reason = rtn.entity.reason;
+						$('#app_name_l').html('<span class="fui-cross-circle">'+reason+'</span>');	
+						$('#app_name_p').addClass('has-error');
+					}
+				}
+			});
+		}else{
+			$('#app_name_l').html('<span class="fui-cross-circle">应用名称不能为空</span>');	
+			$('#app_name_p').addClass('has-error');
+		}
+	});
+
+	$('#createAppBtn').on('click',function(){
+		createAppDlg.dialog('open');
+	});
+});	
+</script>	
+{% endblock %}
+

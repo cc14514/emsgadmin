@@ -1,0 +1,151 @@
+{% extends "parent/base.html" %}
+{% block title %} 登陆 {% endblock %}
+
+{% block nav %}{% endblock %}
+{% block body_style %}
+	style="background-color:#34495E"
+{% endblock %}
+
+{% block main %}  
+<style>
+.container {
+	width: 970px;
+}
+.login-screen {
+	min-height: 473px;
+	padding: 123px 199px 33px 306px;
+	background-color: #95A5A6;
+}
+</style>
+<form action="" method="post" id="login_form">
+<input type="hidden" name="next" value="{% if next %}{{next|escape}}{% else %}/main{% endif %}" />
+{% csrf_token %}
+<div class="container" >
+<div class="login"> 
+	<div class="login-screen"> 
+		<div class="login-icon"> 
+			<img src="/statics/emsgadmin/flat/dist/img/icons/svg/chat.svg" alt="Chat">
+			<h4>Welcome to <small>Emsg</small></h4> 
+		</div> 
+		<div class="login-form"> 
+			<div class="form-group"> 
+				<input type="text" class="form-control login-field" value="" placeholder="Enter your name" id="login-name" name="username"> 
+				<label class="login-field-icon fui-user" for="login-name"></label> 
+			</div> 
+			<div class="form-group"> 
+				<input type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" name="password"> 
+				<label class="login-field-icon fui-lock" for="login-pass"></label> 
+			</div> 
+				<button class="btn btn-block btn-lg btn-info" href="#" type="submit">登陆</button> 
+				<button class="btn btn-block btn-lg btn-default" href="#" type="button" id="reg_btn">注册</button> 
+				<a class="login-link" href="#">Lost your password?</a> 
+			</div> 
+		</div> 
+</div> 
+</div>
+</form>
+
+
+<!--static dialog--> 
+<div id="regUserDlg" title="Modal Dialog"> 
+	<form method="post" action="/reg_save/" id="reg_form" >
+	<p id="username_p">
+		<label class="control-label" id="username_l" ></label>
+		<input class="form-control" name="reg_username" type="text" id="reg_username" placeholder="用户登陆名" />
+	</p> 
+	<p> 
+		<label class="control-label" id="email_l" ></label>
+		<input type="email" class="form-control" name="reg_email" id="reg_email" placeholder="Enter email" />
+	</p>
+	<p> 
+		<label class="control-label" id="password_l" ></label>
+		<input class="form-control" name="name" type="password" name="reg_password" id="reg_password" placeholder="登陆密码" />
+	</p> 
+	<p style="text-align:right">
+		<button type="button" class="btn btn-info" id="save_btn">提交</button>
+		<button type="button" class="btn btn-default" id="close_btn">取消</button>
+	</p>
+	</form>
+</div>
+<!--end static dialog-->
+{% endblock %} 
+{% block script %} 
+<script>
+$(function(){
+	regUserDlg = $('#regUserDlg').dialog({
+		autoOpen:false,
+		height:450,
+		width:450,
+		title:'新用户注册',
+		modal:true,
+		close:function(){}	
+	});
+
+	//表单验证
+	$('#reg_username').on('blur',function(){
+		username = this.value.trim();
+		$('#username_l').html('');	
+		$('#username_p').removeClass('has-error');
+		if(username){
+			body = {"method":"checkusername","params":username};
+			$.ajax({
+				type:"post",
+				url:base_url+"/rest/",
+				dataType:"json",
+				data:{
+					body:json2str(body)
+				},
+				success:function(data){
+					if(!data.success){
+						reason = data.entity.reason;
+						$('#username_l').html('<span class="fui-cross-circle">'+reason+'</span>');	
+						$('#username_p').addClass('has-error');
+					}
+				}
+			});
+		}else{
+			$('#username_l').html('<span class="fui-cross-circle">登陆名不能为空</span>');	
+			$('#username_p').addClass('has-error');
+		}
+	});
+	
+	$("#save_btn").on('click',function(){
+		var username = $("#reg_username").val();
+		var password = $("#reg_password").val();
+		var email = $("#reg_email").val();
+		body = {
+			"method":"reg_save",
+			"params":{
+				"username":username,
+				"password":password,
+				"email":email
+			}
+		};
+		$.ajax({
+			type:"post",
+			url:base_url+"/rest/",
+			dataType:"json",
+			data:{body:json2str(body)},
+			success:function(data){
+				if(data.success){
+					$("#login-name").val(username);
+					$("#login-pass").val(password);
+					$("#login_form").submit();	
+				}
+			}
+		});	
+		
+	});
+	$("#close_btn").on('click',function(){
+		regUserDlg.dialog('close');
+	});
+	$('#reg_btn').on('click',function(){
+		$("#reg_username").val('');
+		$("#reg_password").val('');
+		$("#reg_email").val('');
+		regUserDlg.dialog('open');
+	});
+});
+</script>
+{% endblock %} 
+{% block footer %} {% endblock %} 

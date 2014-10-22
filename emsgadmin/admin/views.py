@@ -220,14 +220,16 @@ def statistic_1(params):
             domain=params['app_name'],
             time__startswith=params['condition']
         ).order_by('time')
+
 	data = {}
+	hours = ["%02d" % k for k in range(24)]
+	for hour in hours:
+		data[hour] = 0
+
 	if hourlyList:
 		for hourly in hourlyList:
 			k = hourly.time.split('-')[-1]
 			data[k] = hourly.total_count
-	else:
-		for k in range(0,24):
-			data[k] = 0
 	return success(True,{'params':params,'data':chart_data_1(data)})
 
 def statistic_2(params):
@@ -237,15 +239,21 @@ def statistic_2(params):
 	params 格式　yy-mm-dd
 	'''
 	logger.debug("statistic_2__request=%s" % params)
+	timespan = int(params['condition'])
 	today = datetime.date.today() 
-	befor = today + datetime.timedelta(-1*int(params['condition']))
+	befor = today - datetime.timedelta(timespan)
 	logger.debug("statistic_2__default_request today=%s ; befor=%s" % (today,befor))
 	dailyList = EmsgStatSessionDaily.objects.filter(
 		domain=params['app_name'],
 		time__lte=str(today),
 		time__gte=str(befor)
 	).order_by('time')
-	data = {str(today):0}
+
+	data = {}
+	for k in range(timespan):
+		date = today - datetime.timedelta(k);
+		data[date.strftime('%Y-%m-%d')] = 0
+
 	for daily in  dailyList :
 		data[daily.time] = daily.total_count
 	return success(True,chart_data_1(data))

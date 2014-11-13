@@ -80,55 +80,33 @@
 
 <!--static dialog--> 
 <div id="send_packet_dlg" title="Modal Dialog"> 
-<form method="post" action="/reg_save/" id="reg_form" >
 	<div class="form-horizontal">
-	
-		<div class="form-group">
-		<label for="inputPassword3" class="col-sm-3 control-label">消息类型:</label>
+
+	  <div class="form-group">
+		<label for="emsg_from" class="col-sm-3 control-label">发送人:</label>
 		<div class="col-sm-5">
-			<select class="form-control" name="offline_ex" id="offline_ex" >
-			  <option value="7">普通聊天</option>
-			  <option value="7">群聊天</option>
-			</select>
+		  <input type="text" class="form-control" id="emsg_from" name="emsg_from" placeholder="发送人的登陆 id" style="color: #000000;"/>
+		</div>
+		<div class="col-sm-4">
+			 <input type="text" class="form-control" style="color: #000000;" value="@{{app_name}}" readonly="readonly" />
 		</div>
 	  </div>
 	  
 	  <div class="form-group">
-		<label for="inputPassword3" class="col-sm-3 control-label">可靠传输:</label>
-		<div class="col-sm-5">
-			<select class="form-control" name="offline_ex" id="offline_ex" >
-			  <option value="7">是</option>
-			  <option value="7">否</option>
-			</select>
-		</div>
-	  </div>	
-	
-	  <div class="form-group">
-		<label for="inputEmail3" class="col-sm-3 control-label">发送人:</label>
+		<label for="emsg_to" class="col-sm-3 control-label">接受人:</label>
 		<div class="col-sm-9">
-		  <input type="text" class="form-control" id="inputEmail3" placeholder="jid" />
-		</div>
-	  </div>
-	  
-	  <div class="form-group">
-		<label for="inputPassword3" class="col-sm-3 control-label">接受人:</label>
-		<div class="col-sm-9">
-		  <input type="text" class="form-control" id="inputEmail3" />
+		  <input type="text" class="form-control" id="emsg_to" name="emsg_to" readonly="readonly" style="color: #000000;"/>
 		</div>
 	  </div>
 	  
 	  <div class="form-group">
 		<label for="inputPassword3" class="col-sm-3 control-label">消息内容:</label>
 		<div class="col-sm-9">
-		  <textarea class="form-control" rows="3">{"attrs":{},"content":""}</textarea>
+		  <textarea class="form-control" rows="3" id="emsg_payload" name="emsg_payload">{"attrs":{},"content":""}</textarea>
 		</div>
 	  </div>
 	  
-	  
-	  
-	  
 	</div>	 
-</form>	
 </div>
 <!--end static dialog-->
 
@@ -140,21 +118,44 @@
 {% block script %}
 <script>
 var send_packet_dlg = null;
-var send_packet_btn = function(args){
-	$("#reg_username").val('');
-	$("#reg_password").val('');
-	$("#reg_email").val('');
+var send_packet_btn = function(to){
+	$("#emsg_to").val(to);
 	send_packet_dlg.dialog('open');
 }
 $(function(){
 	send_packet_dlg = $('#send_packet_dlg').dialog({
 		autoOpen:false,
-		height:650,
+		height:450,
 		width:550,
-		title:'发消息',
+		title:'发消息(调试)',
 		modal:true,
 		buttons:{
 			'发送':function(){
+				body = {
+					"method":"send_packet",
+					"params":{
+						"from":$("#emsg_from").val()+"@{{app_name}}",
+						"to":$("#emsg_to").val(),
+						"payload":JSON.parse($("#emsg_payload").val()),
+						"app_key":"{{app_key}}"
+					}
+				}
+				$.ajax({
+					type:"post",
+					url:"/rest/",
+					dataType:"text",
+					data:{
+						body:json2str(body)
+					},
+					success:function(data){
+						rtn = JSON.parse(data);
+						if(rtn.success){
+							alert("发送成功.");
+						}else{
+							alert("发送失败.");
+						}
+					}
+				});	
 				
 			},
 			'关闭':function(){

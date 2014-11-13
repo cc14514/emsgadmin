@@ -108,7 +108,7 @@ $(function(){
 			//教研这个名字是否已经存在了
 			$.ajax({
 				type:"post",
-				url:base_url+"/rest/",
+				url:"/rest/",
 				dataType:"text",
 				data:{
 					body:'{"method":"checkappname","params":"'+app_name+'"}'

@@ -67,7 +67,7 @@ var statistic = {
 	line1 : function(){
 		$.ajax({
 			type:"post",
-			url:base_url+"/rest/",
+			url:"/rest/",
 			dataType:"text",
 			data:{
 				body:'{"method":"statistic_1","params":{"condition":"'+$("#datepicker1").val()+'","app_name":"{{app_name}}"}}'
@@ -91,7 +91,7 @@ var statistic = {
 	line2 : function(){
 		$.ajax({
 			type:"post",
-			url:base_url+"/rest/",
+			url:"/rest/",
 			dataType:"text",
 			data:{
 				body:'{"method":"statistic_2","params":{"condition":"'+$("#line2_btn").val()+'","app_name":"{{app_name}}"}}'

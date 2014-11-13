@@ -95,6 +95,7 @@ def app_main_user(request):
 	logger.debug('app_main_user__page=%s' % page)	
 	ctx = { 
 		'app_name':app_name,
+		'app_key':app_key,
 		'page':page
 	}	
 	return render_to_response('app_main_user.html',ctx,context_instance=RequestContext(request))	
@@ -153,15 +154,18 @@ def rest(request):
 	输入: body={"method":"已注册的方法","params":{...参数...}}
 	输出: {"success":true/false,"entity":{...}}
 	'''
-	if 'GET' == request.method :
-		body = request.GET.get('body')
-	elif 'POST' == request.method:
-		body = request.POST.get('body')
-	logger.debug("::::::::body=%s ;" % (body))
-	body = json.loads(body)
-	method = body['method']
-	params = body['params']
-	success = apply(rest_map[method],(),{'params':params})	
+	try :
+		if 'GET' == request.method :
+			body = request.GET.get('body')
+		elif 'POST' == request.method:
+			body = request.POST.get('body')
+		logger.debug("::::::::body=%s ;" % (body))
+		body = json.loads(body)
+		method = body['method']
+		params = body['params']
+		success = apply(rest_map[method],(),{'params':params})	
+	except :
+		success = {'success':False}
 	return HttpResponse(json.dumps(success),content_type="text/json ; charset=utf8")
 
 
@@ -277,22 +281,26 @@ def reg_save(params):
 def send_packet(params):
     '''
     params 包含如下属性
-        type,ack,from,to,payload,app_key
+        from,to,payload,app_key
     '''
     sn = uuid.uuid4().hex
     payload = params['payload'] 
+    try:
+    	payload = json.loads(payload)
+    except:
+    	pass
     packet = {
         'envelope':{
             'id':sn,
-            'type':int(params['type']),
-            'ack':int(params['ack']),
+            'type':1,
+            'ack':1,
             'from':params['from'],
             'to':params['to'],
         },        
         'payload':payload,
         'vsn':'0.0.1'
     }
-    logger.debug(packet)
+    logger.debug("sending__%s" % packet)
     host,port = settings.emsg_inf_push_host,settings.emsg_inf_push_port 
     transport = TSocket.TSocket(host , port)
     transport = TTransport.TBufferedTransport(transport)
@@ -395,32 +403,31 @@ def chart_data_1(data_map):
 	return data 
 
     
-
-def send_packet(params):
-    '''
-    params 包含如下属性
-        type,ack,from,to,payload,app_key
-    '''
-    sn = uuid.uuid4().hex
-    payload = params['payload'] 
-    packet = {
-        'envelope':{
-            'id':sn,
-            'type':int(params['type']),
-            'ack':int(params['ack']),
-            'from':params['from'],
-            'to':params['to'],
-        },        
-        'payload':payload,
-        'vsn':'0.0.1'
-    }
-    logger.debug(packet)
-    host,port = settings.emsg_inf_push_host,settings.emsg_inf_push_port 
-    transport = TSocket.TSocket(host , port)
-    transport = TTransport.TBufferedTransport(transport)
-    protocol = TBinaryProtocol.TBinaryProtocol(transport)
-    client = emsg_inf_push.Client(protocol)
-    transport.open()
-    client.process(params['app_key'],sn,json.dumps(packet) )
-    transport.close()
-    return success(True)
+# def send_packet(params):
+#     '''
+#     params 包含如下属性
+#         from,to,payload,app_key
+#     '''
+#     sn = uuid.uuid4().hex
+#     payload = params['payload'] 
+#     packet = {
+#         'envelope':{
+#             'id':sn,
+#             'type':1,
+#             'ack':1,
+#             'from':params['from'],
+#             'to':params['to'],
+#         },        
+#         'payload':payload,
+#         'vsn':'0.0.1'
+#     }
+#     logger.debug(packet)
+#     host,port = settings.emsg_inf_push_host,settings.emsg_inf_push_port 
+#     transport = TSocket.TSocket(host , port)
+#     transport = TTransport.TBufferedTransport(transport)
+#     protocol = TBinaryProtocol.TBinaryProtocol(transport)
+#     client = emsg_inf_push.Client(protocol)
+#     transport.open()
+#     client.process(params['app_key'],sn,json.dumps(packet) )
+#     transport.close()
+#     return success(True)

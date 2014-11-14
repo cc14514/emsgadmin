@@ -121,6 +121,7 @@ def app_main_config_save(request):
 	set_domain_config(app_name,'auth_enable',request.POST.get('auth_enable'))
 	set_domain_config(app_name,'http_callback_enable',request.POST.get('http_callback_enable'))
 	set_domain_config(app_name,'http_callback_url',request.POST.get('http_callback_url'))
+	set_domain_config(app_name,'offline_callback',request.POST.get('offline_callback'))
 	set_offline_config(app_name,'offline_ex',request.POST.get('offline_ex'))
 	
 	return HttpResponseRedirect('/app_main/config/?app_name=%s&sync=%s' % (app_name,app_name))

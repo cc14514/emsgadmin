@@ -33,16 +33,6 @@
 		</div>
 		
 		<div class="form-group">
-			<label for="auth_enable" class="col-sm-2 control-label">认证开关</label>
-			<div class="col-sm-2">
-				<select class="form-control" name="auth_enable" id="auth_enable" >
-				  <option value="true"  {% if auth_enable == 'true' %}selected{% endif %}>开启</option>
-				  <option value="false" {% if auth_enable == 'false' %}selected{% endif %} >关闭</option>
-				</select>
-			</div>
-		</div>
-		
-		<div class="form-group">
 			<label for="http_callback_enable" class="col-sm-2 control-label">回调开关</label>
 			<div class="col-sm-2">
 				<select class="form-control" name="http_callback_enable" id="http_callback_enable" >
@@ -51,14 +41,40 @@
 				</select>
 			</div>
 			<div class="col-sm-4">
-				关闭回调将同时关闭认证功能
+				关闭回调将同时关闭 “认证” 和 “离线消息回调” 功能
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="http_callback_url" class="col-sm-2 control-label">回调接口</label>
 			<div class="col-sm-4">
-				<input type="url" class="form-control" name="http_callback_url" id="http_callback_url" placeholder="http://" value="{{http_callback_url}}">
+				<input type="url" class="form-control" name="http_callback_url" id="http_callback_url" placeholder="http://" value="{% if http_callback_url %}{{http_callback_url}}{% endif %}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="auth_enable" class="col-sm-2 control-label">认证连接</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="auth_enable" id="auth_enable" >
+				  <option value="false" {% if auth_enable == 'false' %}selected{% endif %} >关闭</option>
+				  <option value="true"  {% if auth_enable == 'true' %}selected{% endif %}>开启</option>
+				</select>
+			</div>
+			<div class="col-sm-4">
+				关闭时则允许匿名连接
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="auth_enable" class="col-sm-2 control-label">离线消息回调</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="offline_callback" id="offline_callback" >
+				  <option value="false" {% if offline_callback == 'false' %}selected{% endif %} >关闭</option>
+				  <option value="true"  {% if offline_callback == 'true' %}selected{% endif %}>开启</option>
+				</select>
+			</div>
+			<div class="col-sm-4">
+				开启此接口会得到每条离线消息的回调，会对回调接口造成巨大压力
 			</div>
 		</div>
 		
@@ -71,6 +87,14 @@
 		
 	</div>
 </div>
+
+
+<div id="dialog_simple" title="操作成功" style="font-size: 14pt;color: blue;">
+	&nbsp;配置更改已生效.
+</div>
+
+</div>
+
 {% endblock %}
 
 
@@ -80,8 +104,15 @@
 <script>
 var sync = "{{sync}}";
 $(function(){
+	$('#dialog_simple').dialog({
+	    autoOpen: false,
+	    width: 300
+	});
 	if(sync!="None"){
-		alert(sync);
+		$("#dialog_simple").dialog('open');
+		setTimeout(function(){
+			$("#dialog_simple").dialog('close');
+		},2000);
 	}
 });
 </script>	

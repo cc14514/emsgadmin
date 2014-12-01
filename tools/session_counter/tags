@@ -1,0 +1,60 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BaseModel	session.py	/^class BaseModel(Model):$/;"	c	inherits:Model
+EmsgStatSessionDaily	session.py	/^class EmsgStatSessionDaily(BaseModel):$/;"	c	inherits:BaseModel
+EmsgStatSessionHourly	session.py	/^class EmsgStatSessionHourly(BaseModel):$/;"	c	inherits:BaseModel
+EmsgStatSessionSample	session.py	/^class EmsgStatSessionSample(BaseModel):$/;"	c	inherits:BaseModel
+Meta	session.py	/^    class Meta:$/;"	c	class:BaseModel	inherits:
+Meta	session.py	/^    class Meta:$/;"	c	class:EmsgStatSessionDaily	inherits:
+Meta	session.py	/^    class Meta:$/;"	c	class:EmsgStatSessionHourly	inherits:
+Meta	session.py	/^    class Meta:$/;"	c	class:EmsgStatSessionSample	inherits:
+UnknownField	session.py	/^class UnknownField(object):$/;"	c	inherits:object
+body	get_total_count.py	/^body='{"sn":"' + uuid.uuid1().hex + '","service":"emsg_status","method":"get_total_count","params":{}}'$/;"	v
+daily	get_total_count.py	/^		daily = EmsgSessionStatDaily($/;"	v
+data	get_total_count.py	/^data = {'body' : body}$/;"	v
+database	session.py	/^        database = database$/;"	v	class:BaseModel.Meta
+database	session.py	/^database = MySQLDatabase('db_emsg', **{'host': '192.168.2.13', 'password': '123456', 'user': 'root'})$/;"	v
+date	get_total_count.py	/^date = now.strftime('%Y-%m-%d')$/;"	v
+db_table	session.py	/^        db_table = 'emsg_stat_session_daily'$/;"	v	class:EmsgStatSessionDaily.Meta
+db_table	session.py	/^        db_table = 'emsg_stat_session_hourly'$/;"	v	class:EmsgStatSessionHourly.Meta
+db_table	session.py	/^        db_table = 'emsg_stat_session_sample'$/;"	v	class:EmsgStatSessionSample.Meta
+domain	get_total_count.py	/^						domain=data["domain"],$/;"	v
+domain	get_total_count.py	/^                        domain=data["domain"],$/;"	v
+domain	session.py	/^    domain = CharField(max_length=300)$/;"	v	class:EmsgStatSessionDaily
+domain	session.py	/^    domain = CharField(max_length=300)$/;"	v	class:EmsgStatSessionHourly
+domain	session.py	/^    domain = CharField(max_length=300)$/;"	v	class:EmsgStatSessionSample
+entity	get_total_count.py	/^entity = res["entity"]["result"]$/;"	v
+f	get_total_count.py	/^f = urllib2.urlopen( url=url, data=urllib.urlencode(data))$/;"	v
+hour	get_total_count.py	/^hour = now.strftime('%Y-%m-%d-%H')$/;"	v
+hourly	get_total_count.py	/^		hourly = EmsgSessionStatHourly($/;"	v
+id	get_total_count.py	/^						id=uuid.uuid1(), $/;"	v
+id	get_total_count.py	/^						id=uuid.uuid1(),$/;"	v
+id	session.py	/^    id = CharField(max_length=64, primary_key=True)$/;"	v	class:EmsgStatSessionDaily
+id	session.py	/^    id = CharField(max_length=64, primary_key=True)$/;"	v	class:EmsgStatSessionHourly
+id	session.py	/^    id = CharField(max_length=64, primary_key=True)$/;"	v	class:EmsgStatSessionSample
+insertOrUpdateDaily	sample.py	/^def insertOrUpdateDaily(daily):$/;"	f	access:public
+insertOrUpdateDaily	tools.py	/^def insertOrUpdateDaily(daily):$/;"	f	access:public
+insertOrUpdateHourly	sample.py	/^def insertOrUpdateHourly(hourly):$/;"	f	access:public
+insertOrUpdateHourly	tools.py	/^def insertOrUpdateHourly(hourly):$/;"	f	access:public
+now	get_total_count.py	/^now = datetime.datetime.now()$/;"	v
+res	get_total_count.py	/^res = json.loads(response)$/;"	v
+response	get_total_count.py	/^response = f.read()$/;"	v
+sample	get_total_count.py	/^		sample = EmsgSessionStatSample.create($/;"	v
+time	get_total_count.py	/^						time=date,$/;"	v
+time	get_total_count.py	/^						time=time,$/;"	v
+time	get_total_count.py	/^                        time=hour,$/;"	v
+time	get_total_count.py	/^time = now.strftime('%Y-%m-%d %H:%M:%S')$/;"	v
+time	session.py	/^    time = CharField(max_length=32)$/;"	v	class:EmsgStatSessionDaily
+time	session.py	/^    time = CharField(max_length=32)$/;"	v	class:EmsgStatSessionHourly
+time	session.py	/^    time = DateTimeField()$/;"	v	class:EmsgStatSessionSample
+total_count	get_total_count.py	/^						total_count=data["total_count"]) $/;"	v
+total_count	get_total_count.py	/^						total_count=data["total_count"])$/;"	v
+total_count	get_total_count.py	/^                        total_count=data["total_count"])$/;"	v
+total_count	session.py	/^    total_count = IntegerField()$/;"	v	class:EmsgStatSessionDaily
+total_count	session.py	/^    total_count = IntegerField()$/;"	v	class:EmsgStatSessionHourly
+total_count	session.py	/^    total_count = IntegerField()$/;"	v	class:EmsgStatSessionSample
+url	get_total_count.py	/^url = 'http:\/\/182.254.210.135:4280'$/;"	v

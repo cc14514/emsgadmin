@@ -11,7 +11,6 @@ function json2str(o) {
 	return '{' + arr.join(',') + '}';
 }
 
-
 </script>
 
   <head>
@@ -74,7 +73,7 @@ function json2str(o) {
 				</ul>
 				<ul class="nav navbar-nav navbar-right"> 
 					<li>
-						<a href="#">
+						<a href="#" id="change_pwd_btn" >
 							<span class="fui-user">&nbsp;{{ user.username }}</span>
 						</a>
 					</li> 
@@ -168,6 +167,79 @@ function json2str(o) {
 	  </div>
 	</footer>
 	{% endblock %}
+	
+	
+	
+	
+<!--static dialog--> 
+<div id="change_pwd_dlg" title="修改密码"> 
+	<p>
+		<label class="control-label" id="pwd1" ></label>
+		<input class="form-control" name="pwd1" type="password" id="pwd1" placeholder="输入新密码" />
+	</p> 	
+	<p> 
+		<label class="control-label" id="pwd2" ></label>
+		<input class="form-control" name="name" type="password" name="pwd2" id="pwd2" placeholder="重复新密码" />
+	</p> 
+	<p style="text-align:right">
+		<button type="button" class="btn btn-info" id="change_pwd_save_btn">提交</button>
+		<button type="button" class="btn btn-default" id="change_pwd_close_btn">取消</button>
+	</p>
+</div>
+<!--end static dialog-->	
+	
+	
+<script>
+$(function(){
+	change_pwd_dlg = $('#change_pwd_dlg').dialog({
+		autoOpen:false,
+		height:450,
+		width:450,
+		title:'修改密码',
+		modal:true,
+		close:function(){
+			$("#pwd1").val("");
+			$("#pwd2").val("");
+		}	
+	});
+	
+	$("#change_pwd_save_btn").on('click',function(){
+		var pwd1 = $("#pwd1").val();
+		var pwd2 = $("#pwd2").val();
+		body = {
+			"method":"change_pwd",
+			"params":{
+				"pwd1":pwd1,
+				"pwd2":pwd2
+			}
+		};
+		$.ajax({
+			type:"post",
+			url:"/rest/",
+			dataType:"json",
+			data:{body:json2str(body)},
+			success:function(data){
+				if(!data.success){
+					alert(data.entity.reason);
+				}else{
+					change_pwd_dlg.dialog('close');
+				}
+			}
+		});	
+		
+	});
+	
+	$("#change_pwd_btn").on('click',function(){
+		change_pwd_dlg.dialog('open');
+	});
+	
+	$("#change_pwd_close_btn").on('click',function(){
+		change_pwd_dlg.dialog('close');
+	});
+});
+</script>	
+	
+	
 	
   </body>
 </html>

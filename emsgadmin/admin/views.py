@@ -164,6 +164,10 @@ def rest(request):
 		body = json.loads(body)
 		method = body['method']
 		params = body['params']
+		
+		if request.user and request.user.username:
+			params['current_user'] = request.user.username
+			
 		success = apply(rest_map[method],(),{'params':params})	
 	except :
 		success = {'success':False}
@@ -279,6 +283,22 @@ def reg_save(params):
 	logger.debug("::::::::: reg_form=%s" % list(f))
 	return success(True)
 
+def change_pwd(params):
+	'''
+	重设密码
+	'''
+	logger.debug("=============== %s" % params)
+	username = params.get('current_user')
+	f = (pwd1,pwd2) = (params.get('pwd1'),params.get('pwd2'))
+	logger.debug("::::::::: reg_form=%s" % list(f))
+	if pwd1 == pwd2 :
+		user = User.objects.get(username=username)
+		user.set_password(pwd1)
+		user.save()
+		return success(True)
+	else:
+		return success(False,entity={"reason":"diff password"})		
+
 def send_packet(params):
     '''
     params 包含如下属性
@@ -319,7 +339,9 @@ rest_map = {
 	'statistic_1':statistic_1,				
 	'statistic_2':statistic_2,				
 	'reg_save':reg_save,				
-	'send_packet':send_packet,				
+	'send_packet':send_packet,
+	'change_pwd':change_pwd,
+					
 }
 # 封装返回值
 def success(isOk,entity={}): 

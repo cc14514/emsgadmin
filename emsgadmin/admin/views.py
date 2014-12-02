@@ -297,7 +297,7 @@ def change_pwd(params):
 		user.save()
 		return success(True)
 	else:
-		return success(False,entity={"reason":"diff password"})		
+		return success(False,entity="diff password")		
 
 def send_packet(params):
     '''

@@ -174,12 +174,12 @@ function json2str(o) {
 <!--static dialog--> 
 <div id="change_pwd_dlg" title="修改密码"> 
 	<p>
-		<label class="control-label" id="pwd1" ></label>
-		<input class="form-control" name="pwd1" type="password" id="pwd1" placeholder="输入新密码" />
+		<label class="control-label" ></label>
+		<input class="form-control" name="pwd1" type="text" id="pwd1" placeholder="输入新密码" />
 	</p> 	
 	<p> 
-		<label class="control-label" id="pwd2" ></label>
-		<input class="form-control" name="name" type="password" name="pwd2" id="pwd2" placeholder="重复新密码" />
+		<label class="control-label" ></label>
+		<input class="form-control" name="name" type="text" name="pwd2" id="pwd2" placeholder="重复新密码" />
 	</p> 
 	<p style="text-align:right">
 		<button type="button" class="btn btn-info" id="change_pwd_save_btn">提交</button>
@@ -197,10 +197,7 @@ $(function(){
 		width:450,
 		title:'修改密码',
 		modal:true,
-		close:function(){
-			$("#pwd1").val("");
-			$("#pwd2").val("");
-		}	
+		close:function(){}	
 	});
 	
 	$("#change_pwd_save_btn").on('click',function(){
@@ -230,10 +227,14 @@ $(function(){
 	});
 	
 	$("#change_pwd_btn").on('click',function(){
+		$("#pwd1").val("");
+		$("#pwd2").val("");
 		change_pwd_dlg.dialog('open');
 	});
 	
 	$("#change_pwd_close_btn").on('click',function(){
+		$("#pwd1").val("");
+		$("#pwd2").val("");
 		change_pwd_dlg.dialog('close');
 	});
 });

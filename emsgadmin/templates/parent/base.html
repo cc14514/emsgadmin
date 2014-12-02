@@ -174,7 +174,8 @@ function json2str(o) {
 <!--static dialog--> 
 <div id="change_pwd_dlg" title="修改密码"> 
 	<p>
-		<label class="control-label" ></label>
+		<label class="control-label" id="change_pwd_ok" style="color: green"></label>
+		<label class="control-label" id="change_pwd_error" style="color: red"></label>
 		<input class="form-control" name="pwd1" type="text" id="pwd1" placeholder="输入新密码" />
 	</p> 	
 	<p> 
@@ -218,8 +219,9 @@ $(function(){
 			success:function(data){
 				if(!data.success){
 					alert(data.entity.reason);
+					$("#change_pwd_error").html("两次密码不一致");
 				}else{
-					change_pwd_dlg.dialog('close');
+					$("#change_pwd_ok").html("修改成功");
 				}
 			}
 		});	
@@ -229,12 +231,16 @@ $(function(){
 	$("#change_pwd_btn").on('click',function(){
 		$("#pwd1").val("");
 		$("#pwd2").val("");
+		$("#change_pwd_ok").html("");
+		$("#change_pwd_error").html("");
 		change_pwd_dlg.dialog('open');
 	});
 	
 	$("#change_pwd_close_btn").on('click',function(){
 		$("#pwd1").val("");
 		$("#pwd2").val("");
+		$("#change_pwd_ok").html("");
+		$("#change_pwd_error").html("");
 		change_pwd_dlg.dialog('close');
 	});
 });

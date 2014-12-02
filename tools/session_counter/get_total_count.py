@@ -13,11 +13,6 @@ logging.basicConfig(
 	level=config.logging_cfg.get('level')
 )
 
-if __name__ == '__main__':
-	import time
-	while True:
-		loop()
-		time.sleep(60)
 
 def loop():
 	now = datetime.datetime.now()
@@ -58,4 +53,11 @@ def loop():
 	
 			insertOrUpdateHourly(hourly)
 			insertOrUpdateDaily(daily)
+
+
+if __name__ == '__main__':
+	import time
+	while True:
+		loop()
+		time.sleep(60)
 

@@ -79,6 +79,8 @@
 
 {% block script %}
 <script>
+//是否允许保存
+var app_save_btn = false;
 $(function(){
 	createAppDlg = $('#createAppDlg').dialog({
 		autoOpen:false,
@@ -88,7 +90,9 @@ $(function(){
 		modal:true,
 		buttons:{
 			"保存":function(){
-				$('#app_form').submit();
+				if(app_save_btn){
+					$('#app_form').submit();
+				}
 			},
 			"取消":function(){
 				createAppDlg.dialog('close');
@@ -119,6 +123,9 @@ $(function(){
 						reason = rtn.entity.reason;
 						$('#app_name_l').html('<span class="fui-cross-circle">'+reason+'</span>');	
 						$('#app_name_p').addClass('has-error');
+						app_save_btn = false;
+					}else{
+						app_save_btn = true;
 					}
 				}
 			});

@@ -218,9 +218,10 @@ $(function(){
 			data:{body:json2str(body)},
 			success:function(data){
 				if(!data.success){
-					alert(data.entity.reason);
+					$("#change_pwd_ok").html("");
 					$("#change_pwd_error").html("两次密码不一致");
 				}else{
+					$("#change_pwd_error").html("");
 					$("#change_pwd_ok").html("修改成功");
 				}
 			}

@@ -165,11 +165,13 @@ def rest(request):
 		method = body['method']
 		params = body['params']
 		
-		if request.user and request.user.username:
+		if type(params)==dict and request.user and request.user.username:
+			logger.debug("current_user="+request.user.username)
 			params['current_user'] = request.user.username
 			
 		success = apply(rest_map[method],(),{'params':params})	
 	except :
+		traceback.print_exc()
 		success = {'success':False}
 	return HttpResponse(json.dumps(success),content_type="text/json ; charset=utf8")
 

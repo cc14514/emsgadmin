@@ -171,7 +171,7 @@ def rest(request):
 			
 		success = apply(rest_map[method],(),{'params':params})	
 	except :
-		traceback.print_exc()
+		logging.exception("rest 请求异常")
 		success = {'success':False}
 	return HttpResponse(json.dumps(success),content_type="text/json ; charset=utf8")
 

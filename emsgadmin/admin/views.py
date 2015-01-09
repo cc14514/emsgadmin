@@ -27,7 +27,10 @@ def main(request):
 	应用管理页面
 	'''
 	logger.debug('main__page__open')	
-	domain_list = EmsgDomain.objects.filter(userid=request.user.username)
+        if 'root' == request.user.username:
+            domain_list = EmsgDomain.objects.all()
+        else:
+	    domain_list = EmsgDomain.objects.filter(userid=request.user.username)
 	logger.debug("============ %s =============" % request.user.username)
 	ctx = {
 		'domain_list':domain_list,

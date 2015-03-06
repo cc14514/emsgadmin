@@ -29,6 +29,7 @@ urlpatterns = patterns('',
 	('^app_main/statistic/$' 	,'emsgadmin.admin.views.app_main_statistic'),
 	('^app_main/user/$' 		,'emsgadmin.admin.views.app_main_user'),
 	('^app_main/config/$' 		,'emsgadmin.admin.views.app_main_config'),
-	('^app_main/config_save/$' 	,'emsgadmin.admin.views.app_main_config_save'),
+    ('^app_main/config_save/$'     ,'emsgadmin.admin.views.app_main_config_save'),
+    ('^app_main/log/$'     ,'emsgadmin.admin.views.app_main_log'),
 
 )

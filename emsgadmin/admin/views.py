@@ -21,6 +21,15 @@ from thrift.protocol import TBinaryProtocol
 
 logger = logging.getLogger(__name__)
 
+# mongo_host = '192.168.12.213'
+# mongo_port = 27017
+# mongo_replicaset = 'part1'
+import pymongo
+MONGO_HOST = settings.mongo_host
+MONGO_PORT = settings.mongo_port
+MONGO_REPLICASET = settings.mongo_replicaset
+conn = pymongo.MongoClient(host=MONGO_HOST,port=MONGO_PORT,replicaset=MONGO_REPLICASET)
+
 @login_required
 def main(request):
 	'''
@@ -64,6 +73,31 @@ def app_main_statistic(request):
 	ctx = { 'app_name':app_name }	
 	return render_to_response('app_main_statistic.html',ctx,context_instance=RequestContext(request))	
 
+@login_required
+def app_main_log(request):
+	query = {}
+	from_jid,to_jid = '',''
+	if request.GET.has_key('from_jid'):
+		from_jid = request.GET.get('from_jid')
+		if from_jid:
+			query.update({'from_jid':from_jid})
+	if request.GET.has_key('to_jid'):
+		to_jid = request.GET.get('to_jid')
+		if to_jid:
+			query.update({'to_jid':to_jid})
+	dataList = []
+	logger.debug("from=%s ; to=%s" % (from_jid,to_jid))
+	db = conn['emsg']
+	coll = db['emsg_log']
+	if query or 'root' == request.user.username:
+		logger.debug(query)
+		dataList = coll.find(query,{'_id':0}).sort("ts",pymongo.DESCENDING).skip(0).limit(100)
+	ctx = {
+		'from_jid':from_jid,
+		'to_jid':to_jid,
+		'dataList':dataList
+	}
+	return render_to_response('app_main_log.html',ctx,context_instance=RequestContext(request))
 @login_required
 def app_main_user(request):
 	app_name = request.GET.get('app_name')

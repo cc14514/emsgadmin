@@ -1,0 +1,60 @@
+.form {
+	padding: 1em;
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	min-height: 500px;
+}
+
+.form .block {
+	border-bottom: 1px dotted #ddd;
+}
+
+.form .ui-body-inherit {
+	border-radius: 0;
+	border-color: #ddd;
+}
+
+.form .ui-select .ui-btn {
+	text-align: left;
+	font-weight: normal;
+	border-radius: 0;
+	background-color: #fff;
+}
+
+/*订单信息页*/
+.ui-listview.listview>li div {
+	font-size: .85em;
+	font-weight: 400;
+	display: block;
+	margin: .6em 0;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.dl-list {
+	float: left;
+	display: inline-block;
+	margin: 0;
+	padding-right: 10px;
+}
+
+.dl-list dt, .dl-list dd {
+	display: inline;
+	float: left;
+	margin: 0;
+	font-weight: 400;
+}
+
+.dl-list dt {
+	color: #666;
+	padding-right: 5px;
+}
+
+.form {
+	padding: 1em;
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	min-height: 500px;
+}
+

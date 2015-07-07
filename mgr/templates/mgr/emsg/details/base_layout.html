@@ -1,0 +1,73 @@
+{% extends "mgr/parent/base.html" %}
+{% load myTags %}
+{% block import %}
+<style>
+<!--
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+-->
+</style>
+{% endblock %}
+
+{% block breadcrumb %}
+	<div class="breadcrumb">
+		<div class="row">
+			<div class="col-sm-4">
+				<h5>
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					&nbsp; <a href="/mgr/emsg/">应用管理</a> / 详情 
+				</h5>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block body %}
+<div class="col-sm-2">
+	{% block body_left %}
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<ul class="nav nav-pills nav-stacked" role="tablist">
+				<li role="presentation" class="{%block menu_1 %}{% endblock %}">
+					<a href="/mgr/emsg_details/?app_id={{vo.id}}&menu=1">
+						&nbsp;基本信息
+					</a>
+				</li>
+				<li role="presentation" class="{%block menu_2 %}{% endblock %}">
+					<a href="/mgr/emsg_details/?app_id={{vo.id}}&menu=2" >
+						&nbsp;统计数据
+					</a>
+				</li>
+				<li role="presentation" class="{%block menu_3 %}{% endblock %}">
+					<a href="/mgr/emsg_details/?app_id={{vo.id}}&menu=3" >
+						&nbsp;在线用户
+					</a>
+				</li>
+				<li role="presentation" class="{%block menu_4 %}{% endblock %}">
+					<a href="/mgr/emsg_details/?app_id={{vo.id}}&menu=4" >
+						&nbsp;配置管理
+					</a>
+				</li>
+				<li role="presentation" class="{%block menu_5 %}{% endblock %}">
+					<a href="/mgr/emsg_details/?app_id={{vo.id}}&menu=5" >
+						&nbsp;流水日志
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	{% endblock %}
+</div>
+
+<div class="col-sm-10">
+	{% block body_right %} {% endblock %}
+</div><!-- col-sm-12 -->
+
+<script>
+$(function(){
+	$('#nav_emsg').addClass('active');
+});
+</script>
+
+{% endblock %}

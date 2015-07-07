@@ -1,0 +1,132 @@
+{% extends "mgr/emsg/details/base_layout.html" %}
+{% load myTags %}
+{% block menu_2 %}active{% endblock %}
+
+{% block body_right %}  
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-sm-2">
+				<h5>单日统计</h5>
+			</div>
+			<div class="col-sm-10 text-right form-inline">
+				<input class="form-control" id="datepicker1" placeholder="单日统计">
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-body">
+		<div>
+			<canvas id="canvas1" height="100" ></canvas>
+		</div>
+	</div>
+</div>	
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-sm-2">
+				<h5>阶段统计</h5>
+			</div>
+		  	<div class="col-sm-10 text-right form-inline">
+				<select class="form-control" id="line2_btn" >
+				  <option value="7" >最近７天</option>
+				  <option value="30" >最近３０天</option>
+				  <option value="60" >最近6０天</option>
+				  <option value="90" >最近9０天</option>
+				</select>
+		  	</div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+	</div>
+	<div class="panel-body">
+		<div>
+			<canvas id="canvas2" height="100" ></canvas>
+		</div>
+	</div>
+</div>	
+			
+			
+{% endblock %}
+
+
+{% block script %}
+<script src="/static/emsgadmin/chart/Chart.js"></script>
+<script>
+//var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+var ctx1 = $("#canvas1")[0].getContext("2d");
+var ctx2 = $("#canvas2")[0].getContext("2d");
+
+var chart1 = new Chart(ctx1);
+var chart2 = new Chart(ctx2);
+
+var line1 = null;
+var line2 = null;
+
+var statistic = {
+	line1 : function(){
+		$.ajax({
+			type:"post",
+			url:"/rest/",
+			dataType:"text",
+			data:{
+				body:'{"method":"statistic_1","params":{"condition":"'+$("#datepicker1").val()+'","app_name":"{{vo.name}}"}}'
+			},
+			success:function(data){
+				rtn = JSON.parse(data);
+				if(rtn.success){
+					data = rtn.entity.data;
+					today = rtn.entity.params.condition;
+					$("#datepicker1").val(today);
+					if(line1){
+						line1.destroy();
+					}
+					line1 = chart1.Line(data, {
+							responsive: true
+					});
+				}
+			}
+		});	
+	},
+	line2 : function(){
+		$.ajax({
+			type:"post",
+			url:"/rest/",
+			dataType:"text",
+			data:{
+				body:'{"method":"statistic_2","params":{"condition":"'+$("#line2_btn").val()+'","app_name":"{{vo.name}}"}}'
+			},
+			success:function(data){
+				rtn = JSON.parse(data);
+				if(rtn.success){
+					var ctx2 = $("#canvas2")[0].getContext("2d");
+					data = rtn.entity;
+					if(line2){
+						line2.destroy();
+					}
+					line2 = chart2.Bar(data, {
+						responsive: true
+					});
+				}
+			}
+		});	
+	}
+}
+
+$(function(){
+	$( "#datepicker1" ).datepicker(
+		{dateFormat: "yy-mm-dd"}
+	);
+	
+	$("#datepicker1").change(function(){
+		statistic.line1();
+	});
+
+	$("#line2_btn").change(function(){statistic.line2();});
+		
+	statistic.line1();
+	statistic.line2();
+	
+});	
+</script>	
+{% endblock %}

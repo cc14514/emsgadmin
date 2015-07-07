@@ -1,9 +1,15 @@
+#/usr/bin/env python
+#coding=utf8
 # Django settings for emsgadmin project.
 
-emsg_inf_push_host = '192.168.2.11'
+emsg_inf_push_host = '192.168.12.212'
 emsg_inf_push_port = 4281 
 
-emsg_service_url = "http://192.168.2.11:4280/"
+emsg_service_url = "http://192.168.12.212:4280/"
+
+mongo_host = '192.168.12.213'
+mongo_port = 27017
+mongo_replicaset = 'part1'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,7 +27,7 @@ DATABASES = {
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': '123456',
-        'HOST': '192.168.2.13',               # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'HOST': '192.168.12.213',               # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         # 'PASSWORD': 'abc!@#',
         # 'HOST': '113.11.194.146',               # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '3306',                      # Set to empty string for default.
@@ -72,7 +78,7 @@ STATIC_ROOT = '/app/statics'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/statics/'
+STATIC_URL = '/static/'
 
 import os.path as op
 # Additional locations of static files
@@ -80,7 +86,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	op.join(op.dirname(__file__),'statics'),
+	op.join(op.dirname(__file__),'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -136,7 +142,9 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
     'emsgadmin.admin',
-	'emsgadmin',
+	'domain',
+	'mgr',
+    'myTags',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
@@ -187,14 +195,20 @@ LOGGING = {
 			'propagate': True, 
 		}, 
 		'emsgadmin':{ 
-			'handlers': ['file','console'], 
-			'level': 'DEBUG', 
-			'propagate': True, 
-		} 
+            'handlers': ['file','console'], 
+            'level': 'DEBUG', 
+            'propagate': True, 
+        },
+        'mgr':{ 
+            'handlers': ['file','console'], 
+            'level': 'DEBUG', 
+            'propagate': True, 
+        } 
 	} 
 }
 
-
+# 拦截器配置
 TEMPLATE_CONTEXT_PROCESSORS = (
-	'django.contrib.auth.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
 )

@@ -1,0 +1,42 @@
+{% extends "mgr/emsg/details/base_layout.html" %}
+{% load myTags %}
+{% block menu_1 %}active{% endblock %}
+{% block body_right %}
+<div class="panel panel-default">
+<div class="panel-heading"> <h5> 基本信息	</h5> </div>		
+<div class="panel-body">    
+		
+	<form id="myForm" class="form-horizontal" method="post" >
+
+	 	<input type="hidden" name="id" id="id" value="{{vo.id}}" />	
+	 	<div class="form-group">
+	 	    <label for="icon_upload" class="col-sm-2 control-label">应用图标</label>
+	 	    <div class="col-sm-9 ">
+	 	    	<img id="icon_img" src="{% if vo.icon %}http://fileserver.lczybj.com/fileserver/get/{{vo.icon}}{% endif %}" width="100" height="100" />
+	 	    </div>
+	 	</div>	
+	 	<hr>
+	 	<div class="form-group">
+	 	    <label for="title" class="col-sm-2 control-label">APPKEY</label>
+	 	    <div class="col-sm-5 ">
+      			<input type="text" class="form-control"  value="{{vo.appkey}}" readonly="readonly" >
+	 	    </div>
+	 	</div>
+	 	<div class="form-group">
+	 	    <label for="title" class="col-sm-2 control-label">DOMAIN</label>
+	 	    <div class="col-sm-5 ">
+	 	    	<input type="text" class="form-control" value="{{vo.name}}" readonly="readonly" />
+	 	    </div>
+	 	</div>
+	 	<div class="form-group">
+	 	    <label for="price" class="col-sm-2 control-label">应用描述</label>
+	 	    <div class="col-sm-5">
+	 	    	<textarea rows="3" cols="6" class="form-control" readonly="readonly">{{vo.description}}</textarea>
+	 	    </div>
+	 	</div>
+	</form>	
+		
+		
+</div><!-- end panel-body -->
+</div><!-- end panel -->
+{% endblock %}

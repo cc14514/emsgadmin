@@ -1,0 +1,470 @@
+/*
+ * Template Name: 
+ * Description: Business, E-commerce.
+ * Version: 1.0
+ * Author: Tina Z
+ * Website: http://vipqi.cn
+*/
+
+
+/*Import Global Compulsory CSS Files*/
+@import url(app.css);
+
+/*Import CSS Plugins*/
+@import url(plugins/plugins.css);
+
+
+.price {
+	font-size:14px;
+	text-align:right;
+	color:#666;
+}
+.price > small,
+.price > strong {
+	color:#FF5D5C;
+}
+.price > strong{
+	font-size:18px;
+}
+
+/* position */
+.hide {
+	display:none;
+}
+.aside-r {
+	float:right;
+}
+.aside-l {
+	float:left;
+}
+.text-center {
+	text-align:center;
+}
+.center-block {
+	display:block;
+	margin:0 auto;
+}
+/* text color */
+.text-black {
+	color:#000;
+}
+.text-gray {
+	color:#999;
+}
+.text-darkgray {
+	color:#5d6164;
+}
+.text-green {
+	color:#669900;
+}
+.text-red {
+	color:#FF4400
+}
+.text-pink {
+	color:#FF5D5C;
+}
+.text-yellow {
+	color:#dfa20c;
+}
+/* bg */
+.ui-page-theme-f .ui-btn.bg-green,
+.ui-page-theme-f .ui-btn.bg-yel,
+.bg-red, .bg-green, bg-yel {
+	color:#fff!important; 
+}
+.bg-red {
+	background-color:#ff4400; 
+}
+.bg-green {
+	background-color:#91c73e!important;
+}
+.bg-yel {
+	background-color:#f0a400!important;
+}
+.bg-gray {
+	background-color:#eee!important;
+}
+
+/* height */
+.h50 { height:50px;}
+.h60 { height:60px;}
+.h105 { height:105px;}
+/* label */
+.label {
+	display: inline;
+	padding: 0 0.5em;
+	color: #fff;
+	font-size:85%;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius:1em; 
+}
+.label-red {
+	background-color:#ff4400; 
+}
+.label-green {
+	background-color:#91c73e;
+}
+.label-yel {
+	background-color:#f0a400;
+}
+
+.section { margin:0 -1em 1em -1em;}
+.section .ui-body {
+	background-color:#fff;
+	padding:0.5em;
+}
+.section .bar-f-v1 {
+	margin:-0.2em;
+}
+
+
+/* F
+----------------------------*/
+.ui-bar .aside-r {
+	font-weight:normal;
+	line-height:20px;
+}
+.ui-li-divider.ui-bar-inherit .aside-r {
+	font-weight:normal;
+	line-height:18px;
+}
+
+
+/* f end */
+
+/* Headers, content panels */
+	
+/* ui-li-has-icon deprecated in 1.4. TODO: remove in 1.5 */	
+.ui-listview > li p i {
+	margin-right:3px;
+}
+
+/* Custom
+--------------------------------------------*/
+/* button */
+.ui-page-theme-f .ui-btn.ui-btn-search,
+.ui-page-theme-f .ui-btn.ui-btn-search:hover,
+.ui-page-theme-f .ui-btn.ui-btn-search:active {
+	position:relative;
+	float:right;
+	margin-top:-33px;
+	margin-right:10px;
+	padding-top:1px;
+	padding-bottom:5px;
+	border-color: transparent transparent transparent #91c73e;
+	background-color: #fff;
+}
+.ui-page-theme-f .ui-btn.ui-btn-search i.fa {
+	color:#669900;
+}
+
+/*-- custom-corners  by jqm --*/
+.custom-corners .ui-bar {
+	-webkit-border-top-left-radius:inherit;
+	border-top-left-radius:inherit;
+	-webkit-border-top-right-radius:inherit;
+	border-top-right-radius:inherit;
+	padding:0.7em 1em;/* new add */
+}
+.custom-corners .ui-body {
+	border-top-width: 0;
+	-webkit-border-bottom-left-radius:inherit;
+	border-top-bottom-radius:inherit;
+	-webkit-border-bottom-right-radius:inherit;
+	border-bottom-right-radius:inherit; 
+	padding:0.5em 0.8em
+}
+
+.controlgroup-textinput {
+	padding-top:0.22em;
+	padding-bottom:0.22em;
+}
+
+
+
+/* #login
+----------------------*/
+#login {
+	background-color:#91c73e;
+}
+#login .ui-field-contain {
+	border-bottom-width:0;
+}
+#login .ui-field-contain .ui-input-text {
+	margin:0;
+}
+#login .ui-field-contain .ui-input-text input {
+	font-size:0.95em;
+	padding:0.6em;
+}
+#login .ui-field-contain .ui-input-text.ui-body-inherit {
+	border-color:transparent!important;
+	border-top-color:#d3d3d3!important;
+}
+#login .ui-field-contain .ui-input-text:first-child {
+	border-top-color: transparent!important;
+}
+#login .help {
+	text-align:center;
+}
+#login .help small{
+	color:#fff;
+}
+#login .help a {
+	color:#fff;
+	text-decoration:none;
+	font-size:0.95em;	
+}
+#login .ui-select .ui-btn {
+	border-left-width:0;
+	border-right-width:0;
+	text-align:left;
+	background-color:#fff;
+}
+#login .ui-select .ui-btn:last-child {
+	border-bottom-width: 0;
+}
+#login .getcode {
+	position:absolute;
+	right:0;
+	margin-top:-3.25em;
+	padding:0.9em 1em
+}
+
+/**/
+.avatar {
+	position:relative;
+	min-height:5.5em;
+	padding-left:6em;
+	
+}
+.avatar img:first-child {
+	position:absolute;
+	left:0;
+	top:0;
+	max-width:5em;
+	max-height:5em;
+	border-radius:50%!important;
+	border:0.2em solid #d3d3d3;	
+}
+.avatar h2{
+	font-size:1em;
+	margin:0.45em 0;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.avatar p {
+	margin:0.6em 0;
+	font-size:0.875em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+.avatar p a {	
+	font-weight:normal;
+	text-decoration:none;
+	color:#666;
+}
+
+
+
+.copyright, .copyright h2 {
+	color:#ccc;
+	font-size:0.95em;
+	text-align:center;
+	}
+	
+/* 产品详细
+==================================*/
+.prod-intro {
+	
+}
+.prod-intro p {
+	color:#666;
+	text-indent:2em;
+}
+
+.prod-details > h4 {
+	color:#424242;
+}
+.prod-details > p {
+	color:#777;
+	font-size:0.95em;
+	margin:20px 0 30px 0px;
+}
+.prod-details > p > i {
+	font-size:14px;
+	color:#424242;
+	margin-left:-15px;
+	margin-right:10px;
+}
+.prod-details > ul,
+.prod-details > ol {
+	margin:20px 0 30px 0px;
+}
+.prod-details > ol {
+	padding-left:25px;
+}
+.prod-details > ul > li,
+.prod-details > ol > li {
+	font-size:0.95em;
+	margin:10px 0;
+	color:#777;
+}
+
+
+.prod-details > ol > li > span:first-child {
+	display:inline-block;
+	color:#424242;
+	margin-right:10px;
+	
+}
+
+.prod-details > ol > li > ol {
+	margin-top:10px;
+	margin-bottom:20px;
+}
+.prod-details > ol > li > p {
+	margin-top:10px;
+	margin-left:35px;
+	color:#777;
+}
+.prod-advantage {}
+/* Nail */
+.nail-v1 {
+	margin:0!important;
+	padding:0;
+}
+.nail-v1 li {
+	list-style-type:none;
+	float:left;
+	display:inline-block;
+	width:44%;
+	border:1px solid #eee;
+	padding:1%;
+	margin:5px 1%!important;
+}
+.nail-v1 li > .nail-img {
+	width:100%;
+	padding-top:15px;
+	margin:0 auto;
+	text-align:center;
+	}
+.nail-v1 li > .nail-img > img {
+	margin:0 auto;
+}
+.nail-v1 li > .nail-intro {
+	font-size:0.95em;
+}
+.nail-v1 li > .nail-intro > h4 {
+	text-align:center;
+	color:#222;
+	}
+.nail-v1 li > .nail-intro > p {
+	text-align:center;
+	color:#777;
+}
+
+/* p-comments */
+.p-comments {
+	position:relative;
+	margin-bottom:10px;
+	border-bottom: 1px solid rgba(0,0,0,.05);
+}
+
+.p-comments .c-info {
+	position:relative;
+	height:24px;
+	line-height:24px;
+	margin-bottom:5px;
+}
+.p-comments .c-info .c-uname { float:left;}
+.p-comments .c-info .c-date { float:right;}
+.p-comments .c-info .c-uname,
+.p-comments .c-info .c-date
+{
+	font-size:0.85em;
+	color:#ccc;
+}
+
+.p-comments .c-cont {
+	position:relative;
+}
+.p-comments .c-cont > p {
+	color:#666;
+	font-size:0.9em;
+	margin-top:5px;
+}
+.p-comments-count {
+	padding:0 0 10px 0;
+	text-align:center;
+	border-bottom: 1px solid rgba(0,0,0,.05);
+}
+.p-comments-count a {
+	color:#000;
+	font-size:0.8em;
+	font-weight:normal;
+	text-decoration:none;
+}
+
+
+
+/* 便民电话本 */
+.top-ads img {
+	max-width:100%;
+}
+.pblist {
+	margin-top:0;
+	padding:0;
+}
+.pblist > li {
+	position:relative;
+	list-style-type:none;
+}
+.pblist > li a {
+	display:block;
+	min-height:5.25em;
+	/*padding-left:6.25em;*/
+	border-bottom:1px solid #e7e7e7;
+	background-color:#fff;
+	text-decoration:none;
+}
+.pblist > li a:active{
+	
+	background-color:#f5f5f5;
+}
+.pblist > li h2,
+.pblist > li p,
+.pblist > li small {
+	font-weight:normal;
+	overflow:hidden;
+	white-space:nowrap;
+}
+.pblist > li h2 {
+	color:#000;
+	font-size:1em;
+	margin:0.45em 0;
+}
+.pblist > li p {
+	color:#5d6164;
+	font-size:0.875em;
+}
+.pblist > li .pb-logo {
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-height: 60px;
+	max-width: 60px;
+	padding:15px 20px;
+}
+.pblist > li .pb-logo img {
+	max-height: 60px;
+	max-width: 60px;
+}
+.pblist > li .pb-info {
+	padding:0.5em;	
+	/*border-left:1px solid #e7e7e7;*/
+}

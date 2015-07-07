@@ -1,0 +1,59 @@
+<!-- page form mini -->
+{% if page.totalCount > 0 %}
+<div class="row"><!-- 分页 -->
+  <div class="col-md-12">
+  
+		<ul class="pagination navbar-right">
+			{% if not paginationParams.mini %}
+				<li><a>每页 {{page.pageSize}} 条</a></li>
+				<li><a>共 {{page.totalCount }} 条, 分 {{page.totalPage }} 页</a></li>
+				<li><a>当前第 {{page.pageNo}} 页</a></li>
+			{% endif %}
+			
+			<li><a href="#" onclick="pagination.nextPage('1')">&laquo;</a></li>
+			<li><a href="#" onclick="pagination.nextPage('{{page.prePage}}')">上一页</a></li>
+			<li><a href="#" onclick="pagination.nextPage('{{page.nextPage}}')">下一页</a></li>
+			<li><a href="#" onclick="pagination.nextPage('{{page.totalPage}}')">&raquo;</a></li>
+		</ul>
+
+	</div>
+</div><!-- /分页 -->
+{% endif %}
+
+<script>
+$(function() {
+	this.pagination = (function() {
+		var formId = "#{{paginationParams.form }}";
+		var pageSize = {{page.pageSize}};	
+		var currentPageNo = {{page.pageNo}};	
+		
+		var totalPage = {{page.totalPage}};
+		var formhtml = $(formId).html();
+		var pageNoObj = '<input type="hidden" id="pageNo" name="pageNo" />';
+		var pageSizeObj = '<input type="hidden" id="pageSize" name="pageSize" />';
+		return {
+			nextPage : function(pageNo) {
+				/*
+				alert("pageNo="+pageNo+" ; currentPageNo="+currentPageNo);
+				if( pageNo>currentPageNo && currentPageNo==totalPage){
+					myAlert('已经是最后一页','error');
+					return ;
+				}else if(pageNo==currentPageNo){
+					myAlert('已经是第一页','error');
+					return ;
+				}else if(pageNo<0){
+					myAlert('已经是第一页','error');
+					return ;
+				}else if( pageNo >= totalPage ){
+					myAlert('已经是最后一页','error');
+					return ; 					
+				} */
+				$(formId).html(formhtml+pageNoObj+pageSizeObj);
+				$('#pageNo').val(pageNo);
+				$('#pageSize').val(pageSize);
+				$(formId).submit();
+			}
+		};
+	})();
+});
+</script>

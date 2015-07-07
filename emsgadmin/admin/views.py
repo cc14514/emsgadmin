@@ -179,7 +179,7 @@ def app_save(request):
 	if modify :
 		pass
 	else :		
-		emsgDomain = EmsgDomain(id=id,name=name,userid=username,description=description)
+		emsgDomain = EmsgDomain.objects.create(id=id,name=name,userid=username,description=description)
 		emsgDomain.save()
 		init_app_config(name)
 
@@ -318,6 +318,8 @@ def reg_save(params):
 	)
 	user = User.objects.create_user(username=username,password=password,email=email)
 	user.is_staff = True
+	# 添加到用户组
+	user.groups = Group.objects.filter(name='user') 
 	user.save()
 	logger.debug("::::::::: reg_form=%s" % list(f))
 	return success(True)

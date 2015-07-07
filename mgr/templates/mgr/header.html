@@ -1,0 +1,130 @@
+<!--  
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+-->
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" >
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">
+        		<img alt="Brand" src="/static/hello/img/logo.png" height="20px">
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			
+			<ul class="nav navbar-nav navbar-left">
+				<!-- <li class='' id='nav_index'>
+					<a comment="当前用户" href="/mgr/index/">
+						<span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+						首页 
+					</a>
+				</li> -->
+				<li class='' id='nav_emsg'>
+					<a comment="当前用户" href="/mgr/emsg/">
+						<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+						消息服务 
+					</a>
+				</li>
+				<li class='' id='nav_fileserver'>
+					<a comment="当前用户" href="#" onclick="myAlert('紧张的开发中...')">
+						<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+						文件服务
+					</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a comment="当前用户" href="#" id="change_pwd_btn">
+						<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{request.user.username}} 
+					</a>
+				</li>
+				<li>
+					<a comment="退出" href="/accounts/logout/?next=/mgr/emsg/">
+						<span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid -->
+</nav>
+		
+	
+	
+
+	
+
+<!--static dialog--> 
+<div id="change_pwd_dlg" title="修改密码"> 
+	<p>
+		<label class="control-label" id="change_pwd_ok" style="color: green"></label>
+		<label class="control-label" id="change_pwd_error" style="color: red"></label>
+		<input class="form-control" name="pwd1" type="password" id="pwd1" placeholder="输入新密码" />
+	</p> 	
+	<p> 
+		<label class="control-label" ></label>
+		<input class="form-control" name="name" type="password" name="pwd2" id="pwd2" placeholder="重复新密码" />
+	</p> 
+	<p style="text-align:right">
+		<button type="button" class="btn btn-info" id="change_pwd_save_btn">提交</button>
+		<button type="button" class="btn btn-default" id="change_pwd_close_btn">取消</button>
+	</p>
+</div>
+<!--end static dialog-->	
+
+<script>
+
+$(function(){
+	change_pwd_dlg = $('#change_pwd_dlg').dialog({
+		autoOpen:false,
+		height:350,
+		width:450,
+		title:'修改密码',
+		modal:true,
+		close:function(){}	
+	});
+	
+	$("#change_pwd_save_btn").on('click',function(){
+		var pwd1 = $("#pwd1").val();
+		var pwd2 = $("#pwd2").val();
+		body = {
+			"method":"change_pwd",
+			"params":{
+				"pwd1":pwd1,
+				"pwd2":pwd2
+			}
+		};
+		$.ajax({
+			type:"post",
+			url:"/rest/",
+			dataType:"json",
+			data:{body:json2str(body)},
+			success:function(data){
+				if(!data.success){
+					$("#change_pwd_ok").html("");
+					$("#change_pwd_error").html("两次密码不一致");
+				}else{
+					$("#change_pwd_error").html("");
+					$("#change_pwd_ok").html("修改成功");
+				}
+			}
+		});	
+		
+	});
+	
+	$("#change_pwd_btn").on('click',function(){
+		$("#pwd1").val("");
+		$("#pwd2").val("");
+		$("#change_pwd_ok").html("");
+		$("#change_pwd_error").html("");
+		change_pwd_dlg.dialog('open');
+	});
+	
+	$("#change_pwd_close_btn").on('click',function(){
+		$("#pwd1").val("");
+		$("#pwd2").val("");
+		$("#change_pwd_ok").html("");
+		$("#change_pwd_error").html("");
+		change_pwd_dlg.dialog('close');
+	});
+});
+</script>	

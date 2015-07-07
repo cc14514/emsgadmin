@@ -26,6 +26,7 @@ if DEBUG:
         }
     }
     ALLOWED_HOSTS = []
+    STATIC_ROOT = '/app/static'
 else:
 ####################################################
 # 生产环境 
@@ -47,8 +48,7 @@ else:
         }
     }
     ALLOWED_HOSTS = [ 'localhost', '127.0.0.1', '192.168.2.101', '202.85.214.60', "admin.lcemsg.com",]
-
-
+    STATIC_ROOT = '/home/appusr/www/static'
 
 
 
@@ -90,12 +90,6 @@ MEDIA_ROOT = ''
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = ''
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/app/static'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"

@@ -2,41 +2,62 @@
 #coding=utf8
 # Django settings for emsgadmin project.
 
-emsg_inf_push_host = '192.168.12.212'
-emsg_inf_push_port = 4281 
-
-emsg_service_url = "http://192.168.12.212:4280/"
-
-mongo_host = '192.168.12.213'
-mongo_port = 27017
-mongo_replicaset = 'part1'
-
+# True 测试环境，False 生产环境
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
+if DEBUG:
+####################################################
+# 测试环境
+####################################################
+    emsg_inf_push_host = '192.168.12.212'
+    emsg_inf_push_port = 4281 
+    emsg_service_url = "http://192.168.12.212:4280/"
+    mongo_host = '192.168.12.213'
+    mongo_port = 27017
+    mongo_replicaset = 'part1'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'NAME': 'db_emsg', 
+            'USER': 'root',
+            'PASSWORD': '123456',
+            'HOST': '192.168.12.213',  
+            'PORT': '3306',
+        }
+    }
+    ALLOWED_HOSTS = []
+else:
+####################################################
+# 生产环境 
+####################################################
+    emsg_inf_push_host = '192.168.2.101'
+    emsg_inf_push_port = 4281 
+    emsg_service_url = 'http://192.168.2.101:4280/'
+    mongo_host = '192.168.2.100'
+    mongo_port = 27017
+    mongo_replicaset = 'lc'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql', 
+            'NAME': 'db_emsg', 
+            'USER': 'root',
+            'PASSWORD': '123456',
+            'HOST': '192.168.2.101',  
+            'PORT': '3306',
+        }
+    }
+    ALLOWED_HOSTS = [ 'localhost', '127.0.0.1', '192.168.2.101', '202.85.214.60', "admin.lcemsg.com",]
+
+
+
+
+
+TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
-
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'db_emsg',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '192.168.12.213',               # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        # 'PASSWORD': 'abc!@#',
-        # 'HOST': '113.11.194.146',               # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '3306',                      # Set to empty string for default.
-    }
-}
-
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -74,7 +95,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/app/statics'
+STATIC_ROOT = '/app/static'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"

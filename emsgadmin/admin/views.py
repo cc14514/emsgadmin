@@ -299,11 +299,38 @@ def statistic_2(params):
 
 	data = {}
 	for k in range(timespan):
-		date = today - datetime.timedelta(k);
+		date = today - datetime.timedelta(k)
 		data[date.strftime('%Y-%m-%d')] = 0
 
 	for daily in  dailyList :
 		data[daily.time] = daily.total_count
+	return success(True,chart_data_1(data))
+
+
+def fileserver_statistic_2(params):
+	'''
+	按照阶段统计文件服务的每天写入文件总数
+	'''
+	logger.debug("statistic_2__request=%s" % params)
+	timespan = int(params['condition'])
+	appid = params['appid']
+	
+	today = datetime.date.today() 
+	
+	dl = []
+	for i in range(timespan):
+		befor = today - datetime.timedelta(i)
+		dl.append(str(befor))
+		
+	#logger.debug("statistic_2__default_request today=%s ; befor=%s" % (today,befor))
+	db = conn['fileserver']
+	coll = db['fileindex']
+	data = {}
+	for d in dl:
+		data[d] = coll.find({"appid":appid,"ct":{"$regex":d}}).count()
+	
+	#logger.debug("statistic_2__default_request data = %s" % (data))
+
 	return success(True,chart_data_1(data))
 
 def reg_save(params):
@@ -379,6 +406,7 @@ rest_map = {
 	'checkusername':checkusername,
 	'statistic_1':statistic_1,				
 	'statistic_2':statistic_2,				
+	'fileserver_statistic_2':fileserver_statistic_2,				
 	'reg_save':reg_save,				
 	'send_packet':send_packet,
 	'change_pwd':change_pwd,
@@ -451,8 +479,8 @@ def chart_data_1(data_map):
 	d = collections.OrderedDict( sorted( data_map.items(), key=lambda t:t[0] ) )
 	labels = d.keys() 
 	values = d.values()
-	logger.debug(labels)
-	logger.debug(values)
+	#logger.debug(labels)
+	#logger.debug(values)
 	data = {
 		'labels' : labels,
 		'datasets' : [ { 
@@ -463,7 +491,7 @@ def chart_data_1(data_map):
 			'data': values 
 		} ] 
 	}
-	logger.debug('response_dict=%s' % data)
+	#logger.debug('response_dict=%s' % data)
 	return data 
 
     

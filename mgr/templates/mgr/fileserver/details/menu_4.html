@@ -1,0 +1,121 @@
+{% extends "mgr/fileserver/details/base_layout.html" %}
+{% load myTags %}
+{% block menu_4 %}active{% endblock %}
+
+{% block body_right %}  
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-sm-4 text-left"> <h5> 配置管理 </h5> </div>
+			<div class="col-sm-8 text-right">
+				<button class="btn btn-primary save_btn">保存配置</button>		
+			</div>	
+		</div>
+	</div>
+	<div class="panel-body">
+
+	<form id="cfg_form" class="form-horizontal" role="form" method="POST">
+		<input type="hidden" name="app_id" value="{{vo.id}}" />
+		<input type="hidden" name="menu" value="4" />
+		<input type="hidden" name="sync" value="true" />
+		<div class="form-group">
+			<label for="offline_ex" class="col-sm-2 control-label">离线存储</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="offline_ex" id="offline_ex" >
+				  <option value="2" {% if offline_ex == '2' %}selected{% endif %}>2天</option>
+				  <option value="3" {% if offline_ex == '3' %}selected{% endif %}>3天</option>
+				  <option value="4" {% if offline_ex == '4' %}selected{% endif %}>4天</option>
+				  <option value="5" {% if offline_ex == '5' %}selected{% endif %}>5天</option>
+				  <option value="6" {% if offline_ex == '6' %}selected{% endif %}>6天</option>
+				  <option value="7" {% if offline_ex == '7' %}selected{% endif %}>7天</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="http_callback_enable" class="col-sm-2 control-label">回调开关</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="http_callback_enable" id="http_callback_enable" >
+				  <option value="true"  {% if http_callback_enable == 'true' %}selected{% endif %}>开启</option>
+				  <option value="false" {% if http_callback_enable == 'false' %}selected{% endif %}>关闭</option>
+				</select>
+			</div>
+			<div class="col-sm-6">
+				关闭回调将同时关闭 “认证” 和 “离线消息回调” 功能
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="http_callback_url" class="col-sm-2 control-label">回调接口</label>
+			<div class="col-sm-4">
+				<input type="url" class="form-control" name="http_callback_url" id="http_callback_url" placeholder="http://" value="{% if http_callback_url %}{{http_callback_url}}{% endif %}">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="auth_enable" class="col-sm-2 control-label">认证连接</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="auth_enable" id="auth_enable" >
+				  <option value="false" {% if auth_enable == 'false' %}selected{% endif %} >关闭</option>
+				  <option value="true"  {% if auth_enable == 'true' %}selected{% endif %}>开启</option>
+				</select>
+			</div>
+			<div class="col-sm-4">
+				关闭时则允许匿名连接
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="auth_enable" class="col-sm-2 control-label">离线消息回调</label>
+			<div class="col-sm-2">
+				<select class="form-control" name="offline_callback" id="offline_callback" >
+				  <option value="false" {% if offline_callback == 'false' %}selected{% endif %} >关闭</option>
+				  <option value="true"  {% if offline_callback == 'true' %}selected{% endif %}>开启</option>
+				</select>
+			</div>
+			<div class="col-sm-8">
+				开启此接口会得到每条离线消息的回调，会对回调接口造成巨大压力
+			</div>
+		</div>
+		
+	</form>
+	</div>
+	<div class="panel-footer">
+		<div class="row">
+			<div class="col-sm-12 text-right">
+				<button class="btn btn-primary save_btn">保存配置</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="dialog_simple" title="操作成功" style="font-size: 14pt;color: blue;">
+	&nbsp;配置更改已生效.
+</div>
+
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+var sync = "{{sync}}";
+$(function(){
+	$('.save_btn').click(function(){
+		$('#cfg_form').submit();	
+	});
+	$('#dialog_simple').dialog({
+	    autoOpen: false,
+	    width: 300
+	});
+	if(sync!="None"){
+		$("#dialog_simple").dialog('open');
+		setTimeout(function(){
+			$("#dialog_simple").dialog('close');
+		},2000);
+	}
+});
+</script>	
+{% endblock %}

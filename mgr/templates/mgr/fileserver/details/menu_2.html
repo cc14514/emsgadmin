@@ -1,0 +1,74 @@
+{% extends "mgr/fileserver/details/base_layout.html" %}
+{% load myTags %}
+{% block menu_2 %}active{% endblock %}
+
+{% block body_right %}  
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<div class="row">
+			<div class="col-sm-6">
+				<h5>已上传文件统计(appid={{vo.appid}})</h5>
+			</div>
+		  	<div class="col-sm-6 text-right form-inline">
+				<select class="form-control" id="line2_btn" >
+				  <option value="7" >最近７天</option>
+				  <option value="30" >最近３０天</option>
+				  <option value="60" >最近6０天</option>
+				</select>
+		  	</div><!-- /.col-lg-6 -->
+		</div><!-- /.row -->
+	</div>
+	<div class="panel-body">
+		<div>
+			<canvas id="canvas2" height="100" ></canvas>
+		</div>
+	</div>
+</div>	
+			
+			
+{% endblock %}
+
+
+{% block script %}
+<script src="/static/emsgadmin/chart/Chart.js"></script>
+<script>
+//var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+var ctx2 = $("#canvas2")[0].getContext("2d");
+
+var chart2 = new Chart(ctx2);
+
+var line2 = null;
+
+var statistic = {
+	line2 : function(){
+		$.ajax({
+			type:"post",
+			url:"/rest/",
+			dataType:"text",
+			data:{
+				body:'{"method":"fileserver_statistic_2","params":{"condition":"'+$("#line2_btn").val()+'","appid":"{{vo.appid}}"}}'
+			},
+			success:function(data){
+				rtn = JSON.parse(data);
+				if(rtn.success){
+					var ctx2 = $("#canvas2")[0].getContext("2d");
+					data = rtn.entity;
+					if(line2){
+						line2.destroy();
+					}
+					line2 = chart2.Bar(data, {
+						responsive: true
+					});
+				}
+			}
+		});	
+	}
+}
+
+$(function(){
+	$("#line2_btn").change(function(){statistic.line2();});
+	statistic.line2();
+});	
+</script>	
+{% endblock %}

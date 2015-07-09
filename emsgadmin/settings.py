@@ -35,7 +35,8 @@ else:
     emsg_inf_push_host = '192.168.2.101'
     emsg_inf_push_port = 4281 
     emsg_service_url = 'http://192.168.2.101:4280/'
-    fileserver_service_url = "http://fileserver.lczybj.com/"
+    # 这个服务只在内网开放，所以用的是 uwsgi 内网的 http 地址
+    fileserver_service_url = "http://192.168.2.100:9091/"
     mongo_host = '192.168.2.100'
     mongo_port = 27017
     mongo_replicaset = 'lc'

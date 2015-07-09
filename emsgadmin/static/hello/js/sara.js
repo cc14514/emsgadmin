@@ -41,7 +41,8 @@ $(function() {
 	//alert config
 	Messenger.options = {
 	    extraClasses: 'messenger-fixed messenger-on-top',
-	    theme: 'air'
+	    theme: 'air',
+	    model: true
 	}
 	
 	//confirm config

@@ -111,6 +111,109 @@ class FileserverAction(BaseAction):
         ctx = dict(vo=po,)
         return self._response('mgr/fileserver/details/menu_1.html',ctx)
 
+    
+    def emsg_details_menu_2(self):
+        ''' 数据统计 '''
+        app_id = self._get_params('app_id' )
+        logger.debug(app_id)
+        ctx = dict(vo=FileserverCfg.objects.get(id=app_id),)
+        return self._response('mgr/fileserver/details/menu_2.html',ctx)
+
+    def emsg_details_menu_3(self):
+        ''' 文件管理 '''
+        app_id = self._get_params('app_id' )
+        po = FileserverCfg.objects.get(id=app_id)
+        appid = po.appid
+        pageNo = self._get_params('pageNo')
+        ct = self._get_params('ct')
+        pageSize = 20
+
+        if not pageNo :
+            pageNo = 0
+        else:
+            pageNo = int(pageNo)
+        
+        condition = {'appid':appid}
+        if ct:
+            condition['ct'] = {"$regex":ct}
+            
+        db = conn['fileserver']
+        coll = db['fileindex']
+        logger.debug('condition=%s' % condition)
+        totalCount = coll.find(condition,{"_id":0}).count()
+        datalist = coll.find(condition,{"_id":0}).skip(pageNo*pageSize).limit(pageSize).sort("ct",pymongo.DESCENDING)
+        result = []
+        for data in datalist:
+            if data.has_key('auth'):
+                auth = str(data.get('auth'))
+                if auth == 'true' or auth=='True':
+                    data['auth'] = True
+                else:
+                    data.pop('auth')
+            if data.has_key('size'):
+                size = data.get('size')
+                size = int(size)/1000
+                if size>1000:
+                    size = '%s M' % size/1000 
+                else:
+                    size = '%s K' % size 
+                data['size'] = size
+            result.append(data)
+        totalNo = (totalCount+pageSize-1)/pageSize
+        page = {
+            'totalCount':totalCount,
+            'totalNo':totalNo,
+            'lastPage':totalNo-1,
+            'pageSize':pageSize,
+            'pageNo':pageNo+1,
+            'result':result,
+            'next':pageNo+1,
+            'back':pageNo-1,
+        }
+        logger.debug('fileserver__page=%s' % page)    
+        ctx = { 
+            'page':page,
+            'condition':condition,
+            'vo':po,
+        }    
+        return self._response('mgr/fileserver/details/menu_3.html',ctx)
+    
+    def del_file(self):
+        '''
+        ajax 删除文件
+        '''
+        app_id = self._get_params('app_id' )
+        po = FileserverCfg.objects.get(id=app_id)
+        pk = self._get_params('pk' )
+        auth = self._get_params('auth' )
+        logger.debug('del_file pk=%s ; auth=%s ; app_id=%s' % (pk,auth,app_id))
+        appid = po.appid
+        appkey = po.appkey
+        # 调用删除接口
+        url = settings.fileserver_service_url
+        url_token = urlparse.urljoin(url,'/fileserver/token/')
+        url_del = urlparse.urljoin(url,'/fileserver/del/')
+        
+        if auth:
+            # 非公开的文件删除时，需要先得到 token ，否则无法完成删除
+            form = dict(appid=appid,appkey=appkey)
+            rtn = poster.submit(url_token,form)
+            logger.debug('token_rtn=%s' % rtn)
+            if rtn.get('success'):
+                # 拿到 token
+                token = rtn.get('entity').get('token')
+                form = dict(id=pk,token=token)
+                rtn = poster.submit(url_del,form)
+                logger.debug('del_token_rtn=%s' % rtn)
+            else:
+                return HttpResponse('{"success":false,"entity":{"reason":"get token error"}}',content_type="text/json ; charset=utf8")
+        else:
+            # 删除公开资源时，直接删除即可    
+            form = dict(id=pk,appid=appid,appkey=appkey)
+            rtn = poster.submit(url_del,form)
+            logger.debug('del_rtn=%s' % rtn)
+        return HttpResponse('{"success":true,"entity":"%s"}' % pk,content_type="text/json ; charset=utf8")
+
     def _sync_app_config(self,appid):
         #TODO 同步配置到 fileserver
         token = 'u8_58zr6rjgd-qhicj#w7#jq*-*4%&%@jt=7&b!f+zi7#o0m8%'

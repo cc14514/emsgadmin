@@ -1,15 +1,30 @@
+#/usr/bin/env python
+#coding=utf8
 from __future__ import unicode_literals
 
 from django.db import models
 
+
+class FileserverCfg(models.Model):
+    userid = models.CharField(max_length=64L)
+    icon = models.CharField(max_length=300L,null=True, blank=True)
+    appid = models.CharField(max_length=300L)
+    appkey = models.CharField(max_length=200L)
+    description = models.CharField(max_length=500L,null=True, blank=True)
+    class Meta:
+        verbose_name = '文件服务-Appid' 
+        db_table = 'fileserver_cfg'
+
+
 class EmsgDomain(models.Model):
     id = models.CharField(max_length=64L, primary_key=True)
-    userid = models.CharField(max_length=64L, blank=True)
-    name = models.CharField(max_length=300L)
+    userid = models.CharField('关联用户',max_length=64L, blank=True)
     icon = models.CharField(max_length=300L)
-    appkey = models.CharField(max_length=200L)
-    description = models.CharField(max_length=500L, blank=True)
+    name = models.CharField('DOMAIN',max_length=300L)
+    appkey = models.CharField('APPKEY',max_length=200L)
+    description = models.CharField('COMMENT',max_length=500L, blank=True)
     class Meta:
+        verbose_name = '消息服务-Appid' 
         db_table = 'emsg_domain'
 
 class EmsgDomainConfig(models.Model):

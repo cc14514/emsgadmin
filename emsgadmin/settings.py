@@ -12,6 +12,7 @@ if DEBUG:
     emsg_inf_push_host = '192.168.12.212'
     emsg_inf_push_port = 4281 
     emsg_service_url = "http://192.168.12.212:4280/"
+    fileserver_service_url = "http://192.168.12.213:8000/"
     mongo_host = '192.168.12.213'
     mongo_port = 27017
     mongo_replicaset = 'part1'
@@ -34,6 +35,7 @@ else:
     emsg_inf_push_host = '192.168.2.101'
     emsg_inf_push_port = 4281 
     emsg_service_url = 'http://192.168.2.101:4280/'
+    fileserver_service_url = "http://fileserver.lczybj.com/"
     mongo_host = '192.168.2.100'
     mongo_port = 27017
     mongo_replicaset = 'lc'

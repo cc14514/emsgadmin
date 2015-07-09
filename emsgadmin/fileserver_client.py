@@ -25,6 +25,7 @@ def upload(file_path=None,file_type='image',url=None):
     opts = [
         ('appid', (c.FORM_CONTENTS, appid)),
         ('appkey', (c.FORM_CONTENTS, appkey)),
+        ('watermark', (c.FORM_CONTENTS, 'false')),
         ('file_type', (c.FORM_CONTENTS, file_type)),
     ]
     if file_path :

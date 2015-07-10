@@ -124,6 +124,7 @@ class FileserverAction(BaseAction):
         app_id = self._get_params('app_id' )
         po = FileserverCfg.objects.get(id=app_id)
         appid = po.appid
+        appkey = po.appkey
         pageNo = self._get_params('pageNo')
         ct = self._get_params('ct')
         pageSize = 20
@@ -158,6 +159,7 @@ class FileserverAction(BaseAction):
                 else:
                     size = '%s K' % size 
                 data['size'] = size
+            data['href'] = self._get_file(pk=data.get('pk'),auth=data.get('auth'),appid=appid,appkey=appkey)
             result.append(data)
         totalNo = (totalCount+pageSize-1)/pageSize
         page = {
@@ -214,17 +216,11 @@ class FileserverAction(BaseAction):
             logger.debug('del_rtn=%s' % rtn)
         return HttpResponse('{"success":true,"entity":"%s"}' % pk,content_type="text/json ; charset=utf8")
 
-    def get_file(self):
+    def _get_file(self,**args):
         '''
-        浏览文件资源时，可以下载或查看
+        拼出获取文件的url
         '''
-        app_id = self._get_params('app_id' )
-        po = FileserverCfg.objects.get(id=app_id)
-        pk = self._get_params('pk' )
-        auth = self._get_params('auth' )
-        logger.debug('del_file pk=%s ; auth=%s ; app_id=%s' % (pk,auth,app_id))
-        appid = po.appid
-        appkey = po.appkey
+        pk,appid,appkey,auth = args['pk'],args['appid'],args['appkey'],args['auth']
         # 调用接口
         url = settings.fileserver_service_url
         url_token = urlparse.urljoin(url,'/fileserver/token/')
@@ -237,16 +233,12 @@ class FileserverAction(BaseAction):
             if rtn.get('success'):
                 # 拿到 token
                 token = rtn.get('entity').get('token')
-                form = dict(token=token)
-                rtn = poster.submit(url_get,form)
-                return HttpResponse(rtn)
+                return '%s?token=%s' % (url_get,token)
             else:
-                return HttpResponse('{"success":false,"entity":{"reason":"get token error"}}',content_type="text/json ; charset=utf8")
+                return "#"
         else:
             # 获取公开资源时，直接获取即可    
-            form = dict()
-            rtn = poster.submit(url_get,form)
-            return HttpResponse(rtn)
+            return url_get
 
 
     def _sync_app_config(self,appid):

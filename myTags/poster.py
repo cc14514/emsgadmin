@@ -21,6 +21,7 @@ class Storage:
         return self.contents
 
 def submit(url,form):
+    print url
     print form
     postfields = urlencode(form)
     retrieved_body = Storage()

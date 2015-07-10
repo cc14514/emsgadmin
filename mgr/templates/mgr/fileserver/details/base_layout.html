@@ -20,6 +20,12 @@
 					&nbsp; <a href="/mgr/fileserver/index/">应用管理</a> / 详情 
 				</h5>
 			</div>
+			<div class="col-sm-8 text-right">
+				<h5>
+					<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+					{{vo.appid}}
+				</h5>	
+			</div>
 		</div>
 	</div>
 {% endblock %}
@@ -32,17 +38,20 @@
 			<ul class="nav nav-pills nav-stacked" role="tablist">
 				<li role="presentation" class="{%block menu_1 %}{% endblock %}">
 					<a href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=1">
+						<span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
 						&nbsp;基本信息
-					</a>
-				</li>
-				<li role="presentation" class="{%block menu_2 %}{% endblock %}">
-					<a href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=2" >
-						&nbsp;统计数据
 					</a>
 				</li>
 				<li role="presentation" class="{%block menu_3 %}{% endblock %}">
 					<a href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3" >
+						<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
 						&nbsp;文件管理
+					</a>
+				</li>
+				<li role="presentation" class="{%block menu_2 %}{% endblock %}">
+					<a href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=2" >
+						<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+						&nbsp;统计数据
 					</a>
 				</li>
 			</ul>

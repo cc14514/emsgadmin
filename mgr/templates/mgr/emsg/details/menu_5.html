@@ -10,12 +10,14 @@
 			<input type="hidden" name="menu" value="5" />
 			<div class="row">
 				<div class="col-sm-2">
-					<h5>流水日志</h5>
+					<h5> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 流水日志</h5>
 				</div>
 				<div class="col-sm-10 text-right form-inline">
 					<input class="form-control" name="from_jid" type="search" value="{{from_jid|default:''}}" placeholder="发送人 jid">
 					<input class="form-control" name="to_jid" type="search" value="{{to_jid|default:''}}" placeholder="接收人 jid">
-					<button class="btn btn-primary fui-search" type="submit">查询</button>
+					<button class="btn btn-primary " type="submit">
+						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
+					</button>
 				</div>
 			</div><!-- /.row -->
 		</form>

@@ -214,6 +214,41 @@ class FileserverAction(BaseAction):
             logger.debug('del_rtn=%s' % rtn)
         return HttpResponse('{"success":true,"entity":"%s"}' % pk,content_type="text/json ; charset=utf8")
 
+    def get_file(self):
+        '''
+        浏览文件资源时，可以下载或查看
+        '''
+        app_id = self._get_params('app_id' )
+        po = FileserverCfg.objects.get(id=app_id)
+        pk = self._get_params('pk' )
+        auth = self._get_params('auth' )
+        logger.debug('del_file pk=%s ; auth=%s ; app_id=%s' % (pk,auth,app_id))
+        appid = po.appid
+        appkey = po.appkey
+        # 调用接口
+        url = settings.fileserver_service_url
+        url_token = urlparse.urljoin(url,'/fileserver/token/')
+        url_get = urlparse.urljoin(url,'/fileserver/get/%s/' % pk)
+        if auth:
+            # 非公开的文件删除时，需要先得到 token ，否则无法完成删除
+            form = dict(appid=appid,appkey=appkey)
+            rtn = poster.submit(url_token,form)
+            logger.debug('token_rtn=%s' % rtn)
+            if rtn.get('success'):
+                # 拿到 token
+                token = rtn.get('entity').get('token')
+                form = dict(token=token)
+                rtn = poster.submit(url_get,form)
+                return HttpResponse(rtn)
+            else:
+                return HttpResponse('{"success":false,"entity":{"reason":"get token error"}}',content_type="text/json ; charset=utf8")
+        else:
+            # 获取公开资源时，直接获取即可    
+            form = dict()
+            rtn = poster.submit(url_get,form)
+            return HttpResponse(rtn)
+
+
     def _sync_app_config(self,appid):
         #TODO 同步配置到 fileserver
         token = 'u8_58zr6rjgd-qhicj#w7#jq*-*4%&%@jt=7&b!f+zi7#o0m8%'

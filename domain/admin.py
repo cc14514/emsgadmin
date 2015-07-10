@@ -14,8 +14,8 @@ admin.site.register(EmsgDomain,EmsgDomainAdmin)
 
 
 class FileserverCfgAdmin(admin.ModelAdmin):
-    list_display = ('appid','appkey','userid','description') 
-    fields = ( 'appid','appkey','userid','description') 
+    list_display = ('appid','appkey','icon','userid','description') 
+    fields = ( 'appid','appkey','icon','userid','description') 
     list_filter = ('userid',)
     search_fields = ('appid', 'userid')
 

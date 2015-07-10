@@ -7,7 +7,7 @@ from django.db import models
 
 class FileserverCfg(models.Model):
     userid = models.CharField(max_length=64L)
-    icon = models.CharField(max_length=300L,null=True, blank=True)
+    icon = models.CharField('水印文件',max_length=300L,null=True, blank=True)
     appid = models.CharField(max_length=300L)
     appkey = models.CharField(max_length=200L)
     description = models.CharField(max_length=500L,null=True, blank=True)

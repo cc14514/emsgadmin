@@ -61,20 +61,17 @@
 					<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
 					{% endifequal %}
 				</td>
-				<td>{{ itm.pk }}</td>
+				<td>
+					<a href="{{itm.href}}" target="_blank"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> {{ itm.pk }} </a>
+				</td>
 				<td>{{ itm.file_name }}</td>
 				<td>{{ itm.size }}</td>
 				<td>{{ itm.ct }}</td>
-				<td>
+				<td nowrap="nowrap">
 					<button type="button" class="btn btn-danger btn-xs del_file" value="{{itm.pk}}" name="{{itm.auth}}" >
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 						删除
 					</button>
-					&nbsp;&nbsp;
-					<a target="_blank" class="btn btn-info btn-xs" href="{{itm.href}}" >
-						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						查看
-					</a>
 				</td>
 			</tr>
 			{% empty %}

@@ -172,7 +172,7 @@ class FileserverAction(BaseAction):
             'next':pageNo+1,
             'back':pageNo-1,
         }
-        logger.debug('fileserver__page=%s' % page)    
+        #logger.debug('fileserver__page=%s' % page)    
         ctx = { 
             'page':page,
             'condition':condition,
@@ -222,7 +222,7 @@ class FileserverAction(BaseAction):
         '''
         pk,appid,appkey,auth = args['pk'],args['appid'],args['appkey'],args['auth']
         # 调用接口
-        url = settings.fileserver_service_url
+        url = 'http://fileserver.lczybj.com/' 
         url_token = urlparse.urljoin(url,'/fileserver/token/')
         url_get = urlparse.urljoin(url,'/fileserver/get/%s/' % pk)
         if auth:

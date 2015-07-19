@@ -20,3 +20,9 @@ class FileserverCfgAdmin(admin.ModelAdmin):
     search_fields = ('appid', 'userid')
 
 admin.site.register(FileserverCfg ,FileserverCfgAdmin)
+
+class FileserverNodesAdmin(admin.ModelAdmin):
+    list_display = ('comment','host','port') 
+    fields = ('comment','host','port') 
+
+admin.site.register(FileserverNodes ,FileserverNodesAdmin)

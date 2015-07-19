@@ -34,7 +34,7 @@ urlpatterns = patterns('',
     ('^app_main/log/$'     ,'emsgadmin.admin.views.app_main_log'),
     
     # 管理控制台
-    ('^$',RedirectView.as_view(url='/mgr/emsg/')),
+    ('^$',RedirectView.as_view(url='/mgr/fileserver/index/')),
     url(r'^mgr/',include('mgr.urls')),
     (r'^uploadify/$','emsgadmin.views.uploadify'),
 )

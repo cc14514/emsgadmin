@@ -1,5 +1,6 @@
 #/usr/bin/env python
 #coding=utf8
+import os.path as op
 # Django settings for emsgadmin project.
 
 # True 测试环境，False 生产环境
@@ -9,51 +10,43 @@ if DEBUG:
 ####################################################
 # 测试环境
 ####################################################
-    emsg_inf_push_host = '192.168.12.212'
-    emsg_inf_push_port = 4281 
-    emsg_service_url = "http://192.168.12.212:4280/"
+    #emsg_inf_push_host = '192.168.12.212'
+    #emsg_inf_push_port = 4281 
+    #emsg_service_url = "http://192.168.12.212:4280/"
     fileserver_service_url = "http://192.168.12.213:8000/"
     mongo_host = '192.168.12.213'
     mongo_port = 27017
     mongo_replicaset = 'part1'
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', 
-            'NAME': 'db_emsg', 
-            'USER': 'root',
-            'PASSWORD': '123456',
-            'HOST': '192.168.12.213',  
-            'PORT': '3306',
-        }
-    }
+
     ALLOWED_HOSTS = []
     STATIC_ROOT = '/app/static'
 else:
 ####################################################
 # 生产环境 
 ####################################################
-    emsg_inf_push_host = '192.168.2.101'
-    emsg_inf_push_port = 4281 
-    emsg_service_url = 'http://192.168.2.101:4280/'
-    # 这个服务只在内网开放，所以用的是 uwsgi 内网的 http 地址
-    fileserver_service_url = "http://192.168.2.100:9091/"
-    mongo_host = '192.168.2.100'
+    #emsg_inf_push_host = '192.168.2.101'
+    #emsg_inf_push_port = 4281 
+    #emsg_service_url = 'http://192.168.2.101:4280/'
+    #这个服务只在内网开放，所以用的是 uwsgi 内网的 http 地址
+    fileserver_service_url = "http://192.168.0.7:9091/"
+    mongo_host = '192.168.0.6'
     mongo_port = 27017
     mongo_replicaset = 'lc'
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', 
-            'NAME': 'db_emsg', 
-            'USER': 'root',
-            'PASSWORD': '123456',
-            'HOST': '192.168.2.101',  
-            'PORT': '3306',
-        }
-    }
-    ALLOWED_HOSTS = [ 'localhost', '127.0.0.1', '192.168.2.101', '202.85.214.60', "admin.lcemsg.com",]
+    ALLOWED_HOSTS = [ 'localhost', '127.0.0.1', '192.168.0.6', "fileserver.qiuyouzone.com",]
     STATIC_ROOT = '/home/appusr/www/static'
 
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': op.join(op.dirname(__file__),'data','emsgadmin.db'),                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+    }
+}
 
 TEMPLATE_DEBUG = DEBUG
 ADMINS = (

@@ -15,7 +15,14 @@ class FileserverCfg(models.Model):
         verbose_name = '文件服务-Appid' 
         db_table = 'fileserver_cfg'
 
-
+class FileserverNodes(models.Model):
+    comment = models.CharField(max_length=300L)
+    host = models.CharField(max_length=300L)
+    port = models.IntegerField()
+    class Meta:
+        verbose_name = '文件服务子节点配置' 
+        db_table = 'fileserver_nodes'   
+    
 class EmsgDomain(models.Model):
     id = models.CharField(max_length=64L, primary_key=True)
     userid = models.CharField('关联用户',max_length=64L, blank=True)

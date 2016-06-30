@@ -15,14 +15,14 @@ if DEBUG:
     }
 
     dbconfig = {
-        'host': '192.168.12.13',
+        'host': '192.168.0.214',
         'schema': 'db_emsg',
         'user': 'root',
         'password': '123456'
     }
 
     httpconfig = {
-        'url': 'http://192.168.12.212:4280'
+        'url': 'http://192.168.0.214:4280'
     }
 
 else:

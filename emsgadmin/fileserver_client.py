@@ -1,41 +1,43 @@
-#/usr/bin/env python
-#coding=utf8
+# /usr/bin/env python
+# coding=utf8
 
-import pycurl,json
+import pycurl, json
 
 appid = 'sara'
 appkey = 'sara'
 
+
 class Storage:
     def __init__(self):
         self.contents = ''
- 
+
     def store(self, buf):
         self.contents = "%s%s" % (self.contents, buf)
-    
+
     def __str__(self):
         return self.contents
 
-def upload(file_path=None,file_type='image',url=None):
+
+def upload(file_path=None, file_type='image', url=None):
     retrieved_body = Storage()
     retrieved_headers = Storage()
     c = pycurl.Curl()
     c.setopt(c.URL, 'http://fileserver.lczybj.com/fileserver/upload/')
-   
+
     opts = [
         ('appid', (c.FORM_CONTENTS, appid)),
         ('appkey', (c.FORM_CONTENTS, appkey)),
         ('watermark', (c.FORM_CONTENTS, 'false')),
         ('file_type', (c.FORM_CONTENTS, file_type)),
     ]
-    if file_path :
-        opts.append(('file', (c.FORM_FILE, file_path )))
+    if file_path:
+        opts.append(('file', (c.FORM_FILE, file_path)))
 
     if url:
         opts.append(('url', (c.FORM_CONTENTS, url)))
-    
-    c.setopt(pycurl.HTTPPOST,opts ) 
-    
+
+    c.setopt(pycurl.HTTPPOST, opts)
+
     c.setopt(c.WRITEFUNCTION, retrieved_body.store)
     c.setopt(c.HEADERFUNCTION, retrieved_headers.store)
     c.perform()
@@ -43,10 +45,12 @@ def upload(file_path=None,file_type='image',url=None):
     rtn = '%s' % retrieved_body
     return json.loads(rtn)
 
-def get_file_url(file_id):
-    return 'http://fileserver.lczybj.com/fileserver/get/%s' % file_id 
 
-if __name__ == '__main__' :
+def get_file_url(file_id):
+    return 'http://fileserver.lczybj.com/fileserver/get/%s' % file_id
+
+
+if __name__ == '__main__':
     success = upload('/mgr/sara.png')
     print success
     print type(success)

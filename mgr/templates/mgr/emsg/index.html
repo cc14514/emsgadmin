@@ -2,91 +2,91 @@
 {% load myTags %}
 {% block import %}
 <style>
-<!--
-.table > tbody > tr > td {
-	vertical-align: middle;
-}
--->
+    <!--
+    .table > tbody > tr > td {
+        vertical-align: middle;
+    }
+    -->
 </style>
 {% endblock %}
 
 {% block breadcrumb %}
 <div class="breadcrumb">
-	<div class="row">
-		<div class="col-sm-4">
-			<h5>
-				消息服务
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				&nbsp;应用管理 
-			</h5>
-		</div>
-		<div class="col-sm-8 text-right">
-		<!--<form class="form-inline" id="search_form" method="post">
-				<div class="form-group">
-		       		<label class="sr-only" for="nameOrTel"></label>
-					<input id="nameOrTel" name="nameOrTel" value="" type="text" class="form-control" placeholder="" />
-		       	</div>
-		       	<div class="form-group">
-		       	  <button type="button" onclick="do_search();" class="btn btn-primary "><span class="glyphicon glyphicon-search"></span> 搜索</button>
-		       	</div>
-		</form>-->
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h5>
+                消息服务
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                &nbsp;应用管理
+            </h5>
+        </div>
+        <div class="col-sm-8 text-right">
+            <!--<form class="form-inline" id="search_form" method="post">
+                    <div class="form-group">
+                           <label class="sr-only" for="nameOrTel"></label>
+                        <input id="nameOrTel" name="nameOrTel" value="" type="text" class="form-control" placeholder="" />
+                       </div>
+                       <div class="form-group">
+                         <button type="button" onclick="do_search();" class="btn btn-primary "><span class="glyphicon glyphicon-search"></span> 搜索</button>
+                       </div>
+            </form>-->
+        </div>
+    </div>
 </div>
 {% endblock %}
 {% block body %}
 <div class="col-sm-12">
-	<div class="panel panel-default">
-		<div class="panel-heading text-right">
-			<a href="/mgr/emsg_domain_form/" class="btn btn-sm btn-primary">
-				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加应用
-			</a>	
-		</div>		
-		<div class="panel-body">    
+    <div class="panel panel-default">
+        <div class="panel-heading text-right">
+            <a href="/mgr/emsg_domain_form/" class="btn btn-sm btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加应用
+            </a>
+        </div>
+        <div class="panel-body">
             <table class="table table-striped mtable">
-              <thead>
+                <thead>
                 <tr>
-                  <th>ICON</th>
-                  <th>DOMAIN</th>
-                  <th>APPKEY</th>
-                  <th>描述</th>
-                  <th nowrap="nowrap">操作</th>
+                    <th>ICON</th>
+                    <th>DOMAIN</th>
+                    <th>APPKEY</th>
+                    <th>描述</th>
+                    <th nowrap="nowrap">操作</th>
                 </tr>
-              </thead>
-              <tbody>
-              {% if page.data %}
-              	{% for itm in page.data %}
+                </thead>
+                <tbody>
+                {% if page.data %}
+                {% for itm in page.data %}
                 <tr>
-                  <td>
-                    {% if itm.icon %}  
-                  		<img src="http://fileserver.lczybj.com/fileserver/get/{{itm.icon}}" width="50" height="50" />
-                  	{% endif %} 	
-                  </td>
-                  <td>
-                  	<a href='/mgr/emsg_details/?app_id={{itm.id}}'> {{itm.name}} </a>
-                  </td>
-                  <td> 
-                  	<a href='/mgr/emsg_details/?app_id={{itm.id}}'> {{itm.appkey}} </a> 
-                  </td>
-                  <td>{{itm.description}}</td>
-                  <td>
-                  	<a href="/mgr/emsg_domain_form/?id={{itm.id}}" class="btn btn-default">
-                  		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                  		修改	
-                  	</a>
-                  </td>
+                    <td>
+                        {% if itm.icon %}
+                        <img src="http://fileserver.lczybj.com/fileserver/get/{{itm.icon}}" width="50" height="50"/>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href='/mgr/emsg_details/?app_id={{itm.id}}'> {{itm.name}} </a>
+                    </td>
+                    <td>
+                        <a href='/mgr/emsg_details/?app_id={{itm.id}}'> {{itm.appkey}} </a>
+                    </td>
+                    <td>{{itm.description}}</td>
+                    <td>
+                        <a href="/mgr/emsg_domain_form/?id={{itm.id}}" class="btn btn-default">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            修改
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
-			  {% endif %}	                
-              </tbody>
+                {% endif %}
+                </tbody>
             </table>
             {% set paginationParams %}
-            	{"form":"search_form"}
+            {"form":"search_form"}
             {% endset %}
             {% pagination %}
-		</div>
-				
-	</div>
+        </div>
+
+    </div>
 </div><!-- col-sm-12 -->
 {% endblock %}
 {% block script %}
@@ -94,5 +94,6 @@
 $(function(){
 	$('#nav_emsg').addClass('active');
 });
+
 </script>
 {% endblock %}

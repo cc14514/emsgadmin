@@ -2,117 +2,124 @@
 {% block title %} 应用详情 {% endblock %}
 
 {% block nav_1 %}
-	<span class="navbar-unread">1</span>
+<span class="navbar-unread">1</span>
 {% endblock %}
 
-{% block tab_3 %}active{% endblock %}  
+{% block tab_3 %}active{% endblock %}
 
-{% block right %}  
+{% block right %}
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-			
-			<div class="col-lg-3">
-				<input class="form-control" id="from" type="search" placeholder="用户名">
-			</div><!-- /.col-lg-6 -->
-			<div class="col-lg-3">
-				<button class="btn btn-default fui-search"></button>
-			</div>
-			<div class="col-lg-6" style="text-align:right;">
-				<div class="btn-group">
-					<a 	class="btn btn-default fui-arrow-left" 
-						title="首页" 
-						href="/app_main/user/?app_name={{app_name}}"
-					/>
-					<a 	class="btn btn-default fui-triangle-left-large" 
-						title="上一页" 
-						{% if page.back != -1 %}
-						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.back}}"
-						{% endif %}
-					/>
-					<a 	class="btn btn-default fui-triangle-right-large" 
-						title="下一页" 
-						{% if page.next != page.totalNo %}
-						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.next}}"
-						{% endif %}
-					/>
-					<a 	class="btn btn-default fui-arrow-right" title="尾页" 
-						href="/app_main/user/?app_name={{app_name}}&pageNo={{page.lastPage}}"
-					></a>
-					<button class="btn fui-resize" title="刷新" onclick="location.reload() ;"></button>
-				</div>
-			</div>
-		  
-		</div><!-- /.row -->
-	</div>
-	<div class="panel-body" >
-		<table class="table">
-			{% for user in page.result %}	
-			<tr>
-				<td>
-					<span class="fui-user">&nbsp;{{user.jid}}</span>
-				</td>
-				<td>
-					<span class="{% if user.shutup %}fui-mute{% else %}fui-volume{% endif %}" title="禁言／解除"></span>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<span class="fui-mail" title="发消息" onclick="send_packet_btn('{{user.jid}}');"></span>
-				</td>
-			</tr>
-			{% empty %}
-				<tr>
-					<td>当前没有活跃的连接</td>
-				</tr>
-			{% endfor %}
-		</table>
-		{% if page.totalCount > 0 %}
-			<div style="text-align: right;">
-				<span class="label label-default">总数:{{page.totalCount}}</span>
-				<span class="label label-default">当前页：{{page.pageNo}}</span>
-				<span class="label label-default">每页：{{page.pageSize}}</span>
-				<span class="label label-default">共{{page.totalNo}}页</span>
-			</div>
-		{% endif %}
+    <div class="panel-heading">
+        <div class="row">
 
-	</div>
+            <div class="col-lg-3">
+                <input class="form-control" id="from" type="search" placeholder="用户名">
+            </div>
+            <!-- /.col-lg-6 -->
+            <div class="col-lg-3">
+                <button class="btn btn-default fui-search"></button>
+            </div>
+            <div class="col-lg-6" style="text-align:right;">
+                <div class="btn-group">
+                    <a class="btn btn-default fui-arrow-left"
+                       title="首页"
+                       href="/app_main/user/?app_name={{app_name}}"
+                            />
+                    <a class="btn btn-default fui-triangle-left-large"
+                       title="上一页"
+                       {% if page.back !=-1 %}
+                       href="/app_main/user/?app_name={{app_name}}&pageNo={{page.back}}"
+                       {% endif %}
+                            />
+                    <a class="btn btn-default fui-triangle-right-large"
+                       title="下一页"
+                       {% if page.next !=page.totalNo %}
+                       href="/app_main/user/?app_name={{app_name}}&pageNo={{page.next}}"
+                       {% endif %}
+                            />
+                    <a class="btn btn-default fui-arrow-right" title="尾页"
+                       href="/app_main/user/?app_name={{app_name}}&pageNo={{page.lastPage}}"
+                            ></a>
+                    <button class="btn fui-resize" title="刷新" onclick="location.reload() ;"></button>
+                </div>
+            </div>
 
-</div>	
+        </div>
+        <!-- /.row -->
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            {% for user in page.result %}
+            <tr>
+                <td>
+                    <span class="fui-user">&nbsp;{{user.jid}}</span>
+                </td>
+                <td>
+                    <span class="{% if user.shutup %}fui-mute{% else %}fui-volume{% endif %}" title="禁言／解除"></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="fui-mail" title="发消息" onclick="send_packet_btn('{{user.jid}}');"></span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td>当前没有活跃的连接</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if page.totalCount > 0 %}
+        <div style="text-align: right;">
+            <span class="label label-default">总数:{{page.totalCount}}</span>
+            <span class="label label-default">当前页：{{page.pageNo}}</span>
+            <span class="label label-default">每页：{{page.pageSize}}</span>
+            <span class="label label-default">共{{page.totalNo}}页</span>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
 
 
-<!--static dialog--> 
-<div id="send_packet_dlg" title="Modal Dialog"> 
-	<div class="form-horizontal">
+<!--static dialog-->
+<div id="send_packet_dlg" title="Modal Dialog">
+    <div class="form-horizontal">
 
-	  <div class="form-group">
-		<label for="emsg_from" class="col-sm-3 control-label">发送人:</label>
-		<div class="col-sm-5">
-		  <input type="text" class="form-control" id="emsg_from" name="emsg_from" placeholder="发送人的登陆 id" style="color: #000000;"/>
-		</div>
-		<div class="col-sm-4">
-			 <input type="text" class="form-control" style="color: #000000;" value="@{{app_name}}" readonly="readonly" />
-		</div>
-	  </div>
-	  
-	  <div class="form-group">
-		<label for="emsg_to" class="col-sm-3 control-label">接受人:</label>
-		<div class="col-sm-9">
-		  <input type="text" class="form-control" id="emsg_to" name="emsg_to" readonly="readonly" style="color: #000000;"/>
-		</div>
-	  </div>
-	  
-	  <div class="form-group">
-		<label for="inputPassword3" class="col-sm-3 control-label">消息内容:</label>
-		<div class="col-sm-9">
-		  <textarea class="form-control" rows="3" id="emsg_payload" name="emsg_payload">{"attrs":{},"content":""}</textarea>
-		</div>
-	  </div>
-	  
-	</div>	 
+        <div class="form-group">
+            <label for="emsg_from" class="col-sm-3 control-label">发送人:</label>
+
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="emsg_from" name="emsg_from" placeholder="发送人的登陆 id"
+                       style="color: #000000;"/>
+            </div>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" style="color: #000000;" value="@{{app_name}}"
+                       readonly="readonly"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="emsg_to" class="col-sm-3 control-label">接受人:</label>
+
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="emsg_to" name="emsg_to" readonly="readonly"
+                       style="color: #000000;"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">消息内容:</label>
+
+            <div class="col-sm-9">
+                <textarea class="form-control" rows="3" id="emsg_payload"
+                          name="emsg_payload">{"attrs":{},"content":""}</textarea>
+            </div>
+        </div>
+
+    </div>
 </div>
 <!--end static dialog-->
 
 {% endblock %}
-
-
 
 
 {% block script %}
@@ -165,6 +172,7 @@ $(function(){
 		close:function(){}
 	});
 });	
-</script>	
+
+</script>
 {% endblock %}
 

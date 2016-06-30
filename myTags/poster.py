@@ -1,7 +1,7 @@
-#/usr/bin/env python
-#coding=utf8
+# /usr/bin/env python
+# coding=utf8
 
-import pycurl,json
+import pycurl, json
 
 try:
     # python 3
@@ -10,17 +10,19 @@ except ImportError:
     # python 2
     from urllib import urlencode
 
+
 class Storage:
     def __init__(self):
         self.contents = ''
- 
+
     def store(self, buf):
         self.contents = "%s%s" % (self.contents, buf)
-    
+
     def __str__(self):
         return self.contents
 
-def submit(url,form):
+
+def submit(url, form):
     print url
     print form
     postfields = urlencode(form)
@@ -39,4 +41,3 @@ def submit(url,form):
         return json.loads(rtn)
     except:
         return rtn
-    

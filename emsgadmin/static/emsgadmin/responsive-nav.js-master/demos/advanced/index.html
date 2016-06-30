@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Responsive Nav &middot; Advanced Demo</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="../../responsive-nav.css">
     <link rel="stylesheet" href="styles.css">
     <script src="../../responsive-nav.js"></script>
-  </head>
-  <body>
+</head>
+<body>
 
-    <nav class="nav-collapse">
-      <ul>
+<nav class="nav-collapse">
+    <ul>
         <li><a href="http://google.com">Home</a></li>
         <li><a href="http://google.com">About</a></li>
         <li><a href="http://google.com">Projects</a></li>
         <li><a href="http://google.com">Blog</a></li>
-      </ul>
-    </nav>
+    </ul>
+</nav>
 
-    <script>
+<script>
       var navigation = responsiveNav(".nav-collapse", {
         animate: true,                    // Boolean: Use CSS3 transitions, true or false
         transition: 284,                  // Integer: Speed of the transition, in milliseconds
@@ -35,7 +35,8 @@
         open: function(){},               // Function: Open callback
         close: function(){}               // Function: Close callback
       });
-    </script>
 
-  </body>
+</script>
+
+</body>
 </html>

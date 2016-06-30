@@ -2,125 +2,128 @@
 {% load myTags %}
 {% block menu_3 %}active{% endblock %}
 
-{% block body_right %}  
+{% block body_right %}
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-			<div class="col-sm-6">
-				<h5> <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 文件管理 </h5>
-			</div>
-			
-			<div class="col-sm-6" style="text-align:right;">
-				<div class="btn-group">
-					<a 	class="btn btn-success btn-sm fui-arrow-left" 
-						title="首页" 
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&ct={{condition.ct}}"
-					>首页</a>
-					<a 	class="btn btn-success btn-sm fui-triangle-left-large" 
-						title="上一页" 
-						{% if page.back != -1 %}
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.back}}&ct={{condition.ct}}"
-						{% endif %}
-					>上一页</a>
-					<a 	class="btn btn-success btn-sm fui-triangle-right-large" 
-						title="下一页" 
-						{% if page.next != page.totalNo %}
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.next}}&ct={{condition.ct}}"
-						{% endif %}
-					>下一页</a>
-					
-					<button class="btn btn-sm btn-success" title="刷新" onclick="location.reload() ;">刷新</button>
-				</div>
-			</div>
-			
-		</div><!-- /.row -->
-	</div>
-	<div class="panel-body" >
-		<table class="table table-hover">
-			<thead>
-				<th></th>
-				<th></th>
-				<th>文件ID</th>
-				<th>文件名</th>
-				<th>大小</th>
-				<th>上传时间</th>
-				<th>操作</th>
-			</thead>
-			<tbody>
-			{% for itm in page.result %}	
-			<tr id="tr_{{itm.pk}}" {% if itm.auth %}class="warning"{% else %}{% endif %}>
-				<td>
-					{% if itm.auth %}  
-						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-					{% endif %}
-				</td>
-				<td>
-					{% ifequal itm.file_type 'image' %}
-					<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>	
-					{% else %}
-					<span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-					{% endifequal %}
-				</td>
-				<td>
-					<a href="{{itm.href}}" target="_blank"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> {{ itm.pk }} </a>
-				</td>
-				<td>{{ itm.file_name }}</td>
-				<td>{{ itm.size }}</td>
-				<td>{{ itm.ct }}</td>
-				<td nowrap="nowrap">
-					<button type="button" class="btn btn-danger btn-xs del_file" value="{{itm.pk}}" name="{{itm.auth}}" >
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						删除
-					</button>
-				</td>
-			</tr>
-			{% empty %}
-				<tr>
-					<td colspan="6">暂无数据...</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 文件管理 </h5>
+            </div>
 
-	</div>
-	
-	<div class="panel-footer">
-		<div class="row">
-			<div class="col-sm-6">
-				{% if page.totalCount > 0 %}
-					<span class="label label-default">总数:{{page.totalCount}}</span>
-					<span class="label label-default">当前页：{{page.pageNo}}</span>
-					<span class="label label-default">每页：{{page.pageSize}}</span>
-					<span class="label label-default">共{{page.totalNo}}页</span>
-				{% endif %}
-			</div>
-			<div class="col-sm-6" style="text-align:right;">
-				<div class="btn-group">
-					<a 	class="btn btn-success btn-sm fui-arrow-left" 
-						title="首页" 
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&ct={{condition.ct}}"
-					>首页</a>
-					<a 	class="btn btn-success btn-sm fui-triangle-left-large" 
-						title="上一页" 
-						{% if page.back != -1 %}
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.back}}&ct={{condition.ct}}"
-						{% endif %}
-					>上一页</a>
-					<a 	class="btn btn-success btn-sm fui-triangle-right-large" 
-						title="下一页" 
-						{% if page.next != page.totalNo %}
-						href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.next}}&ct={{condition.ct}}"
-						{% endif %}
-					>下一页</a>
-					
-					<button class="btn btn-sm btn-success" title="刷新" onclick="location.reload() ;">刷新</button>
-				</div>
-			</div>
-		  
-		</div><!-- /.row -->
-	</div>
+            <div class="col-sm-6" style="text-align:right;">
+                <div class="btn-group">
+                    <a class="btn btn-success btn-sm fui-arrow-left"
+                       title="首页"
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&ct={{condition.ct}}"
+                            >首页</a>
+                    <a class="btn btn-success btn-sm fui-triangle-left-large"
+                       title="上一页"
+                       {% if page.back !=-1 %}
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.back}}&ct={{condition.ct}}"
+                       {% endif %}
+                            >上一页</a>
+                    <a class="btn btn-success btn-sm fui-triangle-right-large"
+                       title="下一页"
+                       {% if page.next !=page.totalNo %}
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.next}}&ct={{condition.ct}}"
+                       {% endif %}
+                            >下一页</a>
 
-</div>	
+                    <button class="btn btn-sm btn-success" title="刷新" onclick="location.reload() ;">刷新</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover">
+            <thead>
+            <th></th>
+            <th></th>
+            <th>文件ID</th>
+            <th>文件名</th>
+            <th>大小</th>
+            <th>上传时间</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            {% for itm in page.result %}
+            <tr id="tr_{{itm.pk}}" {% if itm.auth %}class="warning" {% else %}{% endif %}>
+                <td>
+                    {% if itm.auth %}
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% ifequal itm.file_type 'image' %}
+                    <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+                    {% else %}
+                    <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                    {% endifequal %}
+                </td>
+                <td>
+                    <a href="{{itm.href}}" target="_blank"> <span class="glyphicon glyphicon-search"
+                                                                  aria-hidden="true"></span> {{ itm.pk }} </a>
+                </td>
+                <td>{{ itm.file_name }}</td>
+                <td>{{ itm.size }}</td>
+                <td>{{ itm.ct }}</td>
+                <td nowrap="nowrap">
+                    <button type="button" class="btn btn-danger btn-xs del_file" value="{{itm.pk}}" name="{{itm.auth}}">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        删除
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">暂无数据...</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                {% if page.totalCount > 0 %}
+                <span class="label label-default">总数:{{page.totalCount}}</span>
+                <span class="label label-default">当前页：{{page.pageNo}}</span>
+                <span class="label label-default">每页：{{page.pageSize}}</span>
+                <span class="label label-default">共{{page.totalNo}}页</span>
+                {% endif %}
+            </div>
+            <div class="col-sm-6" style="text-align:right;">
+                <div class="btn-group">
+                    <a class="btn btn-success btn-sm fui-arrow-left"
+                       title="首页"
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&ct={{condition.ct}}"
+                            >首页</a>
+                    <a class="btn btn-success btn-sm fui-triangle-left-large"
+                       title="上一页"
+                       {% if page.back !=-1 %}
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.back}}&ct={{condition.ct}}"
+                       {% endif %}
+                            >上一页</a>
+                    <a class="btn btn-success btn-sm fui-triangle-right-large"
+                       title="下一页"
+                       {% if page.next !=page.totalNo %}
+                       href="/mgr/fileserver/details/?app_id={{vo.id}}&menu=3&pageNo={{page.next}}&ct={{condition.ct}}"
+                       {% endif %}
+                            >下一页</a>
+
+                    <button class="btn btn-sm btn-success" title="刷新" onclick="location.reload() ;">刷新</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+
+</div>
 
 
 {% endblock %}
@@ -153,5 +156,6 @@ $(function(){
 	});
 
 });	
-</script>	
+
+</script>
 {% endblock %}

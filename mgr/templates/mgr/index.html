@@ -2,50 +2,56 @@
 {% load myTags %}
 {% block body %}
 <div class="col-sm-12">
-<div class="breadcrumb">
-	<div class="row">
-		<div class="col-sm-2">
-			<h5><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;资源 </h5>
-		</div>
-	</div>
-</div>
+    <div class="breadcrumb">
+        <div class="row">
+            <div class="col-sm-2">
+                <h5><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp;资源 </h5>
+            </div>
+        </div>
+    </div>
 
-<div class="row">
-  
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="/static/hello/img/android.jpg">
-      <div class="caption">
-        <h3>Android SDK 资源下载</h3>
-        <p>
-        </p>
-      </div>
+    <div class="row">
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="/static/hello/img/android.jpg">
+
+                <div class="caption">
+                    <h3>Android SDK 资源下载</h3>
+
+                    <p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="/static/hello/img/sdk.jpg">
+
+                <div class="caption">
+                    <h3>Thumbnail label</h3>
+
+                    <p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="/static/hello/img/api.jpg">
+
+                <div class="caption">
+                    <h3>Thumbnail label</h3>
+
+                    <p>
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>  
-  
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="/static/hello/img/sdk.jpg">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>
-        </p>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="/static/hello/img/api.jpg">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>
-        </p>
-      </div>
-    </div>
-  </div>
-  
-</div>
 </div>
 
 {% endblock %}
@@ -54,5 +60,6 @@
 $(function(){
 	$('#nav_index').addClass('active');
 });
+
 </script>
 {% endblock %}

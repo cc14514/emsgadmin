@@ -2,78 +2,81 @@
 {% block title %} 首页 {% endblock %}
 
 {% block nav_1 %}
-	<span class="navbar-unread">1</span>
+<span class="navbar-unread">1</span>
 {% endblock %}
 
 
-{% block body %}  
-	
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="row">
-				<div class="col-lg-3">
-					<button type="button" class="btn btn-info" id="createAppBtn">
-						<span class="fui-plus"> &nbsp;添加</span>
-					</button>
-				</div>
-			</div>
-		</div>
-		<div class="panel-body">
-			<table class="table table-hover "> 
-				<thead> 
-					<tr> 
-						<th></th> 
-						{% if is_root %}<th>客户</th>{% endif %}
-						<th>应用名称</th> 
-						<th>应用描述</th> 
-						<th>操作</th> 
-					</tr> 
-				</thead> 
-				<tbody> 
-					{% for domain in domain_list %}	
-					<tr> 
-						<td>{{forloop.counter}}</td> 
-						{% if is_root %}<td>{{domain.userid}}</td>{% endif %}
-						<td>
-							<span class="fui-search">&nbsp;<a href="/app_main/?app_name={{domain.name}}">{{domain.name}}</a></span>
-						</td> 
-						<td>{{domain.description}}</td> 
-						<td>
-							<span class="fui-new"></span>
-							&nbsp; &nbsp; &nbsp; &nbsp;
-							<span class="fui-trash"></span>
-						</td> 
-					</tr> 
-					{% empty %}
-						<tr>
-							<td></td>
-							<td>点击“添加”创建应用</td>
-						</tr>
-					{% endfor %}
-				</tbody> 
-			</table>
-			
-		</div>
-	</div>
-	
-	
-	
-	<!--static dialog--> 
-	<div id="createAppDlg" title="Modal Dialog"> 
-		<form method="post" action="/app_save/" id="app_form" >
-		<p id="app_name_p"> 
-			<label class="control-label" id="app_name_l" ></label>
-			<input class="form-control" name="name" type="text" id="app_name" placeholder="应用名称">
-		</p> 
-		<p> 
-			<textarea value="" placeholder="应用描述" name="description"  class="form-control"></textarea>
-		</p> 
-		</form>
-	</div>
-	<!--end static dialog-->
+{% block body %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-3">
+                <button type="button" class="btn btn-info" id="createAppBtn">
+                    <span class="fui-plus"> &nbsp;添加</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-hover ">
+            <thead>
+            <tr>
+                <th></th>
+                {% if is_root %}
+                <th>客户</th>
+                {% endif %}
+                <th>应用名称</th>
+                <th>应用描述</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for domain in domain_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                {% if is_root %}
+                <td>{{domain.userid}}</td>
+                {% endif %}
+                <td>
+                    <span class="fui-search">&nbsp;<a
+                            href="/app_main/?app_name={{domain.name}}">{{domain.name}}</a></span>
+                </td>
+                <td>{{domain.description}}</td>
+                <td>
+                    <span class="fui-new"></span>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="fui-trash"></span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td></td>
+                <td>点击“添加”创建应用</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<!--static dialog-->
+<div id="createAppDlg" title="Modal Dialog">
+    <form method="post" action="/app_save/" id="app_form">
+        <p id="app_name_p">
+            <label class="control-label" id="app_name_l"></label>
+            <input class="form-control" name="name" type="text" id="app_name" placeholder="应用名称">
+        </p>
+
+        <p>
+            <textarea value="" placeholder="应用描述" name="description" class="form-control"></textarea>
+        </p>
+    </form>
+</div>
+<!--end static dialog-->
 {% endblock %}
-
-
 
 
 {% block script %}
@@ -138,6 +141,7 @@ $(function(){
 		createAppDlg.dialog('open');
 	});
 });	
-</script>	
+
+</script>
 {% endblock %}
 

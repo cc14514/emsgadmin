@@ -2,50 +2,52 @@
 {% block title %} 应用详情 {% endblock %}
 
 {% block nav_1 %}
-	<span class="navbar-unread">1</span>
+<span class="navbar-unread">1</span>
 {% endblock %}
 
 
-{% block tab_2 %}active{% endblock %}  
+{% block tab_2 %}active{% endblock %}
 
-{% block right %}  
+{% block right %}
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-			<div class="col-lg-3">
-				<input class="form-control" id="datepicker1" placeholder="单日统计">
-			</div>
-		</div>
-		
-	</div>
-	<div class="panel-body">
-		<div>
-			<canvas id="canvas1" height="100" ></canvas>
-		</div>
-	</div>
-</div>	
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-3">
+                <input class="form-control" id="datepicker1" placeholder="单日统计">
+            </div>
+        </div>
+
+    </div>
+    <div class="panel-body">
+        <div>
+            <canvas id="canvas1" height="100"></canvas>
+        </div>
+    </div>
+</div>
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-		  <div class="col-lg-3">
-				<select class="form-control" id="line2_btn" >
-				  <option value="7" >最近７天</option>
-				  <option value="30" >最近３０天</option>
-				  <option value="60" >最近6０天</option>
-				  <option value="90" >最近9０天</option>
-				</select>
-		  </div><!-- /.col-lg-6 -->
-		</div><!-- /.row -->
-	</div>
-	<div class="panel-body">
-		<div>
-			<canvas id="canvas2" height="100" ></canvas>
-		</div>
-	</div>
-</div>	
-			
-			
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-3">
+                <select class="form-control" id="line2_btn">
+                    <option value="7">最近７天</option>
+                    <option value="30">最近３０天</option>
+                    <option value="60">最近6０天</option>
+                    <option value="90">最近9０天</option>
+                </select>
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <div class="panel-body">
+        <div>
+            <canvas id="canvas2" height="100"></canvas>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 
@@ -128,6 +130,7 @@ $(function(){
 	statistic.line2();
 	
 });	
-</script>	
+
+</script>
 {% endblock %}
 

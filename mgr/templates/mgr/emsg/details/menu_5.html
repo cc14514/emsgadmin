@@ -2,64 +2,69 @@
 {% load myTags %}
 {% block menu_5 %}active{% endblock %}
 
-{% block body_right %}  
+{% block body_right %}
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<form>
-			<input type="hidden" name="app_id" value="{{vo.id}}" />
-			<input type="hidden" name="menu" value="5" />
-			<div class="row">
-				<div class="col-sm-2">
-					<h5> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 流水日志</h5>
-				</div>
-				<div class="col-sm-10 text-right form-inline">
-					<input class="form-control" name="from_jid" type="search" value="{{from_jid|default:''}}" placeholder="发送人 jid">
-					<input class="form-control" name="to_jid" type="search" value="{{to_jid|default:''}}" placeholder="接收人 jid">
-					<button class="btn btn-primary " type="submit">
-						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
-					</button>
-				</div>
-			</div><!-- /.row -->
-		</form>
-	</div>
-	<div class="panel-body" >
-		<table class="table table-bordered table-condensed">
-			<tr style="background-color: #f5f5f5">
-				<td>摘要</td>
-				<td>内容</td>
-			</tr>
-			{% for itm in dataList %}	
-			<tr>
-				<td style="background-color: #dff0d8">
-					{{itm.ct}}&nbsp;&nbsp;
-					{%ifequal itm.state 'A'%}
-						<font color="green">[已接收]</font>
-					{% else %}
-						<font color="blue">[已发送]</font>
-					{%endifequal%}
-					&nbsp;&nbsp;-->
-				</td>
-				<td rowspan="4" >
-					<textarea rows="5" cols="50" style="height: 100%;width: 100%;" readonly="readonly">{{itm.payload}}</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>发送人:&nbsp;{{itm.from_jid}}</td>
-			</tr>
-			<tr>
-				<td>接收人:&nbsp;{{itm.to_jid}}</td>
-			</tr>
-			<tr>
-				<td>消息id:&nbsp;{{itm.pk}}</td>
-			</tr>
-			
-			{% endfor %}
-			
-		</table>
+    <div class="panel-heading">
+        <form>
+            <input type="hidden" name="app_id" value="{{vo.id}}"/>
+            <input type="hidden" name="menu" value="5"/>
 
-	</div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <h5><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 流水日志</h5>
+                </div>
+                <div class="col-sm-10 text-right form-inline">
+                    <input class="form-control" name="from_jid" type="search" value="{{from_jid|default:''}}"
+                           placeholder="发送人 jid">
+                    <input class="form-control" name="to_jid" type="search" value="{{to_jid|default:''}}"
+                           placeholder="接收人 jid">
+                    <button class="btn btn-primary " type="submit">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
+                    </button>
+                </div>
+            </div>
+            <!-- /.row -->
+        </form>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-condensed">
+            <tr style="background-color: #f5f5f5">
+                <td>摘要</td>
+                <td>内容</td>
+            </tr>
+            {% for itm in dataList %}
+            <tr>
+                <td style="background-color: #dff0d8">
+                    {{itm.ct}}&nbsp;&nbsp;
+                    {%ifequal itm.state 'A'%}
+                    <font color="green">[已接收]</font>
+                    {% else %}
+                    <font color="blue">[已发送]</font>
+                    {%endifequal%}
+                    &nbsp;&nbsp;-->
+                </td>
+                <td rowspan="4">
+                    <textarea rows="5" cols="50" style="height: 100%;width: 100%;"
+                              readonly="readonly">{{itm.payload}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>发送人:&nbsp;{{itm.from_jid}}</td>
+            </tr>
+            <tr>
+                <td>接收人:&nbsp;{{itm.to_jid}}</td>
+            </tr>
+            <tr>
+                <td>消息id:&nbsp;{{itm.pk}}</td>
+            </tr>
 
-</div>	
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
 
 
 {% endblock %}

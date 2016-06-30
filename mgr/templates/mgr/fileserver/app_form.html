@@ -1,93 +1,113 @@
 {% extends "mgr/parent/base.html" %}
 {% load myTags %}
-{% block import %} 
-	<link rel="stylesheet" href="/static/hello/uploadify/uploadify.css">
-	<script src="/static/hello/uploadify/jquery.uploadify.min.js"></script>
+{% block import %}
+<link rel="stylesheet" href="/static/hello/uploadify/uploadify.css">
+<script src="/static/hello/uploadify/jquery.uploadify.min.js"></script>
 {% endblock %}
 {% block breadcrumb %}
 <div class="breadcrumb">
-	<div class="row">
-		<div class="col-sm-4">
-			<h5>
-				文件服务	
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-				&nbsp; <a href="/mgr/emsg/">应用管理</a> / {{action}} 
-			</h5>
-		</div>
-		<div class="col-sm-8 text-right">
-			<a class="btn btn-default " href="/mgr/fileserver/index/"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回</a>
-			<button type="button" class="btn btn-primary save_btn" > <span class="glyphicon glyphicon-saved" aria-hidden="true"></span> 保存</button>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-sm-4">
+            <h5>
+                文件服务
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                &nbsp; <a href="/mgr/emsg/">应用管理</a> / {{action}}
+            </h5>
+        </div>
+        <div class="col-sm-8 text-right">
+            <a class="btn btn-default " href="/mgr/fileserver/index/"> <span class="glyphicon glyphicon-chevron-left"
+                                                                             aria-hidden="true"></span> 返回</a>
+            <button type="button" class="btn btn-primary save_btn"><span class="glyphicon glyphicon-saved"
+                                                                         aria-hidden="true"></span> 保存
+            </button>
+        </div>
+    </div>
 </div>
 {% endblock %}
 {% block body %}
 <div class="col-sm-12">
-<div class="panel panel-default">
+    <div class="panel panel-default">
 
-<div class="panel-body">
+        <div class="panel-body">
 
-<div class="row">
+            <div class="row">
 
 
-<div class="col-sm-12">
-	<h4>应用信息</h4>
-	<hr>
-	<form id="myForm" class="form-horizontal" method="post" >
+                <div class="col-sm-12">
+                    <h4>应用信息</h4>
+                    <hr>
+                    <form id="myForm" class="form-horizontal" method="post">
 
-	 	<input type="hidden" name="id" id="id" value="{{vo.id}}" />	
-	 	<div class="form-group">
-	 	    <label for="icon_upload" class="col-sm-2 control-label">水印图片</label>
-	 	    <div class="col-sm-9 ">
-	 	    	<input id="icon_upload" type="file" multiple="false" />
-	 	    	<input id="icon" name="icon" type="hidden" value="{{vo.icon|default:''}}" />
-	 	    </div>
-	 	</div>	
-	 	<div class="form-group">
-	 	    <label for="icon_img" class="col-sm-2 control-label"></label>
-	 	    <div class="col-sm-9 ">
-	 	    	<img id="icon_img" src="{% if vo.icon %}http://fileserver.lczybj.com/fileserver/get/{{vo.icon}}{% endif %}" width="100" height="100" />
-	 	    </div>
-	 	</div>	
-	 	<hr>
-	 	<div class="form-group">
-	 	    <label for="title" class="col-sm-2 control-label">APPID</label>
-	 	    <div class="col-sm-5 ">
-	 	    	<input type="text" class="form-control" name="appid" id="appid" value="{{vo.appid}}" placeholder="由英文和数字组成" {% if vo.id %}readonly="readonly"{% endif %} />
-	 	    </div>
-	 	</div>
-	 	<div class="form-group">
-	 	    <label for="title" class="col-sm-2 control-label">APPKEY</label>
-	 	    <div class="col-sm-5 ">
-	 	    	<div class="input-group">
-      				<input type="text" class="form-control" name="appkey" id="appkey" value="{{appkey}}" readonly="readonly" >
+                        <input type="hidden" name="id" id="id" value="{{vo.id}}"/>
+
+                        <div class="form-group">
+                            <label for="icon_upload" class="col-sm-2 control-label">水印图片</label>
+
+                            <div class="col-sm-9 ">
+                                <input id="icon_upload" type="file" multiple="false"/>
+                                <input id="icon" name="icon" type="hidden" value="{{vo.icon|default:''}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="icon_img" class="col-sm-2 control-label"></label>
+
+                            <div class="col-sm-9 ">
+                                <img id="icon_img"
+                                     src="{% if vo.icon %}http://fileserver.lczybj.com/fileserver/get/{{vo.icon}}{% endif %}"
+                                     width="100" height="100"/>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">APPID</label>
+
+                            <div class="col-sm-5 ">
+                                <input type="text" class="form-control" name="appid" id="appid" value="{{vo.appid}}"
+                                       placeholder="由英文和数字组成" {% if vo.id %}readonly="readonly" {% endif %}/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-2 control-label">APPKEY</label>
+
+                            <div class="col-sm-5 ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="appkey" id="appkey" value="{{appkey}}"
+                                           readonly="readonly">
       				<span class="input-group-btn">
         				<button class="btn btn-info" type="button" id="gen_appkey">重新生成</button>
       				</span>
-    			</div>
-	 	    </div>
-	 	</div>
-	 	<div class="form-group">
-	 	    <label for="price" class="col-sm-2 control-label">应用描述</label>
-	 	    <div class="col-sm-5">
-	 	    	<textarea rows="3" cols="6" class="form-control" name="description" id="description">{{vo.description}}</textarea>
-	 	    </div>
-	 	</div>
-	</form>
-</div><!-- end col-sm-6 -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">应用描述</label>
 
-</div><!-- end row -->
+                            <div class="col-sm-5">
+                                <textarea rows="3" cols="6" class="form-control" name="description" id="description">{{vo.description}}</textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- end col-sm-6 -->
+
+            </div>
+            <!-- end row -->
 
 
-</div><!-- end panel-body -->
-<div class="panel-footer">
-	<div class="text-right">
-		<a class="btn btn-default " href="/mgr/fileserver/index/"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回</a>
-		<button type="button" class="btn btn-primary save_btn" > <span class="glyphicon glyphicon-saved" aria-hidden="true"></span> 保存</button>
-		
-    </div>	
-</div>
-</div><!-- end panel -->
+        </div>
+        <!-- end panel-body -->
+        <div class="panel-footer">
+            <div class="text-right">
+                <a class="btn btn-default " href="/mgr/fileserver/index/"> <span
+                        class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回</a>
+                <button type="button" class="btn btn-primary save_btn"><span class="glyphicon glyphicon-saved"
+                                                                             aria-hidden="true"></span> 保存
+                </button>
+
+            </div>
+        </div>
+    </div>
+    <!-- end panel -->
 </div>
 
 {% endblock %}
@@ -143,5 +163,6 @@ $(function(){
 		});	
 	});
 });
+
 </script>
 {% endblock %}

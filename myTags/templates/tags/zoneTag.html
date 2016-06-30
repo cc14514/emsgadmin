@@ -1,9 +1,9 @@
 {{zone_js_data|safe}}
 
-<select class="{{ clazz }} zone_coll_1{{tagskey}}" {% if disabled %}disabled{% endif %} ></select>
-<select class="{{ clazz }} zone_coll_2{{tagskey}}" {% if disabled %}disabled{% endif %} ></select>
-<select class="{{ clazz }} zone_coll_3{{tagskey}}" {% if disabled %}disabled{% endif %} ></select>
-<input type="hidden" class="{{tagskey }}" id="{{id }}" name="{{name }}" title="" value="" />
+<select class="{{ clazz }} zone_coll_1{{tagskey}}" {% if disabled %}disabled{% endif %}></select>
+<select class="{{ clazz }} zone_coll_2{{tagskey}}" {% if disabled %}disabled{% endif %}></select>
+<select class="{{ clazz }} zone_coll_3{{tagskey}}" {% if disabled %}disabled{% endif %}></select>
+<input type="hidden" class="{{tagskey }}" id="{{id }}" name="{{name }}" title="" value=""/>
 
 <script>
 $(function() {
@@ -159,4 +159,5 @@ $(function() {
 	})();
 	zone{{tagskey}}.start('{{value}}');
 });
+
 </script>

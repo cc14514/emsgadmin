@@ -1,39 +1,43 @@
-#/usr/bin/env python
-#coding=utf8
+# /usr/bin/env python
+# coding=utf8
 '''
 Created on 2015年5月13日
 
 @author: liangc
 '''
-import uuid,json
-from django.template import Library,Node
+import uuid, json
+from django.template import Library, Node
 from django.contrib.auth.models import User
+
 register = Library()
 
+
 @register.filter('get_user')
-def get_user(value,arg=None):
+def get_user(value, arg=None):
     '''
     获取用户信息，value 为 user_id ,arg 为要获取的属性
     例如取id对应的username: {{user_id|get_user:'username'}}
     '''
-    try :
+    try:
         user = User.objects.get(id=value)
         if user.__dict__.has_key(arg):
             return user.__dict__.get(arg)
-    except: pass
+    except:
+        pass
     return value
 
 
 @register.filter('request_token')
-def request_token(value,arg=None):
+def request_token(value, arg=None):
     value = value.lower()
     token = uuid.uuid4().hex
-    if value == 'get' :
+    if value == 'get':
         return 'request_token=%s' % token
-    elif value == 'post' :
+    elif value == 'post':
         return '<input type="hidden" name="request_token" id="request_token" value="%s">' % token
-    else :
-        return token 
+    else:
+        return token
+
 
 @register.tag(name="set")
 def do_set(parser, token):
@@ -48,20 +52,22 @@ def do_set(parser, token):
     key = token.split_contents()[1]
     nodelist = parser.parse(('endset',))
     parser.delete_first_token()
-    return SetNode(key,nodelist)
+    return SetNode(key, nodelist)
+
 
 class SetNode(Node):
-    def __init__(self,key,nodelist):
+    def __init__(self, key, nodelist):
         self.nodelist = nodelist
         self.key = key
-        
+
     def render(self, context):
         output = self.nodelist.render(context)
         params = json.loads(output)
         context[self.key] = params
         return ''
 
-@register.inclusion_tag('tags/zoneTag.html',takes_context=True)
+
+@register.inclusion_tag('tags/zoneTag.html', takes_context=True)
 def zoneTag(context):
     '''
     初始化一个地区选择控件前，必须先在上下文中设置 zoneTagParams 属性，
@@ -78,14 +84,14 @@ def zoneTag(context):
         {% zoneTag %}
     '''
     params = context['zoneTagParams']
-    if not params.get('clazz') : params['clazz'] = 'form-control'
+    if not params.get('clazz'): params['clazz'] = 'form-control'
 
     params['zone_js_data'] = zone_js_data
     params['tagskey'] = uuid.uuid4().hex
     return params
 
 
-@register.inclusion_tag('tags/pagination.html',takes_context=True)
+@register.inclusion_tag('tags/pagination.html', takes_context=True)
 def pagination(context):
     '''
     对 context 中的 page 对象进行分业渲染，
@@ -101,11 +107,12 @@ def pagination(context):
     '''
     params = context['paginationParams']
     params['tagskey'] = uuid.uuid4().hex
-    ctx = dict( paginationParams = params,page = context.get('page'))
+    ctx = dict(paginationParams=params, page=context.get('page'))
     # print "######"
     # print ctx 
     # print "######"
-    return ctx 
+    return ctx
+
 
 #########################
 # zone标签里用的资源

@@ -2,33 +2,35 @@
 {% load myTags %}
 {% block menu_2 %}active{% endblock %}
 
-{% block body_right %}  
+{% block body_right %}
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="row">
-			<div class="col-sm-6">
-				<h5>  
-					<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
-					已上传文件统计
-				</h5>
-			</div>
-		  	<div class="col-sm-6 text-right form-inline">
-				<select class="form-control" id="line2_btn" >
-				  <option value="7" >最近７天</option>
-				  <option value="30" >最近３０天</option>
-				  <option value="60" >最近6０天</option>
-				</select>
-		  	</div><!-- /.col-lg-6 -->
-		</div><!-- /.row -->
-	</div>
-	<div class="panel-body">
-		<div>
-			<canvas id="canvas2" height="100" ></canvas>
-		</div>
-	</div>
-</div>	
-			
-			
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-sm-6">
+                <h5>
+                    <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                    已上传文件统计
+                </h5>
+            </div>
+            <div class="col-sm-6 text-right form-inline">
+                <select class="form-control" id="line2_btn">
+                    <option value="7">最近７天</option>
+                    <option value="30">最近３０天</option>
+                    <option value="60">最近6０天</option>
+                </select>
+            </div>
+            <!-- /.col-lg-6 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <div class="panel-body">
+        <div>
+            <canvas id="canvas2" height="100"></canvas>
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}
 
 
@@ -73,5 +75,6 @@ $(function(){
 	$("#line2_btn").change(function(){statistic.line2();});
 	statistic.line2();
 });	
-</script>	
+
+</script>
 {% endblock %}

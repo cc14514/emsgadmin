@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
 import logging, traceback, json, uuid, collections, urllib, urllib2, datetime
 from emsgadmin.admins.models import *
 import emsgadmin.settings as settings
@@ -198,6 +199,8 @@ def app_save(request):
     return HttpResponseRedirect('/?sync=%s' % name)
 
 
+
+@csrf_exempt
 def rest(request):
     '''
     urls.py 中配置了 /rest 转向到此方法,转发所有的rest请求

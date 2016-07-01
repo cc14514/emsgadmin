@@ -15,10 +15,8 @@
             </h5>
         </div>
         <div class="col-sm-8 text-right">
-            <a class="btn btn-default " href="/mgr/emsg/"> <span class="glyphicon glyphicon-chevron-left"
-                                                                 aria-hidden="true"></span> 返回</a>
-            <button type="button" class="btn btn-primary  save_btn"><span class="glyphicon glyphicon-saved"
-                                                                          aria-hidden="true"></span> 保存
+            <a class="btn btn-default " href="/mgr/emsg/"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回</a>
+            <button type="button" class="btn btn-primary  save_btn"><span class="glyphicon glyphicon-saved" aria-hidden="true"></span> 保存
             </button>
         </div>
     </div>
@@ -63,8 +61,7 @@
 
                             <div class="col-sm-5 ">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="appkey" id="appkey" value="{{appkey}}"
-                                           readonly="readonly">
+                                    <input type="text" class="form-control" name="appkey" id="appkey" value="{{appkey}}" readonly="readonly">
       				<span class="input-group-btn">
         				<button class="btn btn-info" type="button" id="gen_appkey">重新生成</button>
       				</span>
@@ -76,8 +73,7 @@
 
                             <div class="col-sm-5 ">
                                 <input type="text" class="form-control" name="name" id="name" value="{{vo.name}}"
-                                       placeholder="uid 格式为 username@domain/resource，此处填写的是 domain 段" {% if vo.id
-                                       %}readonly="readonly" {% endif %}/>
+                                       placeholder="uid 格式为 username@domain/resource，此处填写的是 domain 段" {% if vo.id %}readonly="readonly" {% endif %}/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -99,10 +95,11 @@
         <!-- end panel-body -->
         <div class="panel-footer">
             <div class="text-right">
-                <a class="btn btn-default " href="/mgr/emsg/"> <span class="glyphicon glyphicon-chevron-left"
-                                                                     aria-hidden="true"></span> 返回</a>
-                <button type="button" class="btn btn-primary  save_btn"><span class="glyphicon glyphicon-saved"
-                                                                              aria-hidden="true"></span> 保存
+                <a class="btn btn-default " href="/mgr/emsg/">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> 返回
+                </a>
+                <button type="button" class="btn btn-primary  save_btn">
+                    <span class="glyphicon glyphicon-saved" aria-hidden="true"></span> 保存
                 </button>
             </div>
         </div>
